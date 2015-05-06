@@ -1,0 +1,4 @@
+1. You can add shortcuts to list by simple dragging programs or shortcuts into list.
+2. Default keyboard shortcut is set to Ctrl+Q. 
+3. Keyboard shortcut can be changed in preferences dialog.
+4. Preferences dialog can be accessed from tray menu.
