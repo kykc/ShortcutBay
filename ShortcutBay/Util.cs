@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Drawing;
 using System.IO;
@@ -94,13 +95,19 @@ namespace ShortcutBay
 			form.Opacity = 0;
 		}
 
-		public static bool execute(string path)
+		public static bool execute(string path, bool asAdmin = false)
 		{
 			//MessageBox.Show(path);
 			Process myProcess = new Process();
 			ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(path);
 			myProcessStartInfo.UseShellExecute = true;
 			myProcess.StartInfo = myProcessStartInfo;
+
+			if (asAdmin)
+			{
+				myProcess.StartInfo.Verb = "runas";
+			}
+
 			try
 			{
 				myProcess.Start();

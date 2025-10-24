@@ -140,11 +140,11 @@ namespace ShortcutBay
 			}
 		}
 
-		public void handleExecute()
+		public void handleExecute(bool asAdmin = false)
 		{
 			if (this.SelectedItems.Count > 0)
 			{
-				if (Util.execute(this.SelectedItems[0].SubItems[1].Text))
+				if (Util.execute(this.SelectedItems[0].SubItems[1].Text, asAdmin))
 				{
 					MainForm form = this.FindForm() as MainForm;
 					form.toggleVisibility(this, new EventArgs());

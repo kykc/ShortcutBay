@@ -14,11 +14,12 @@ namespace ShortcutBay
 
 		protected void init()
 		{
+			this.Items.Add(Util.createToolStripMenuItem("Run", new EventHandler(handleRun)));
+			this.Items.Add(Util.createToolStripMenuItem("Run as Admin", new EventHandler(handleRunAsAdmin)));
 			this.Items.Add(Util.createToolStripMenuItem("&Add Item", new EventHandler(handleAdd)));
 			this.Items.Add(Util.createToolStripMenuItem("&Delete Item", new EventHandler(handleDelete)));
 			this.Items.Add(Util.createToolStripMenuItem("&Rename", new EventHandler(handleRename)));
 			this.Items.Add(Util.createToolStripMenuItem("Refresh &List", new EventHandler(handleRefresh)));
-			
 		}
 
 		public void handleRefresh(object sender, EventArgs e)
@@ -47,6 +48,16 @@ namespace ShortcutBay
 				Util.addListItem(dialog.FileName);
 				Util.getMainForm().initForm();
 			}
+		}
+
+		public void handleRunAsAdmin(object? sender, EventArgs e)
+		{
+			Util.getMainForm().getListView().handleExecute(true);
+		}
+
+		public void handleRun(object? sender, EventArgs e)
+		{
+			Util.getMainForm().getListView().handleExecute();
 		}
 	}
 }
