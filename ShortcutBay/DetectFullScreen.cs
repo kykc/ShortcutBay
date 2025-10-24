@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace MainKykc
+namespace ShortcutBay
 {
 	class DetectFullScreen
 	{

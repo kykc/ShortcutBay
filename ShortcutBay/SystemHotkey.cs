@@ -4,7 +4,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace MainKykc
+namespace ShortcutBay
 {
 	public class SystemHotkey : System.ComponentModel.Component, IDisposable
 	{

@@ -7,13 +7,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Collections;
-using MainKykc;
 
 // TODO: Assign custom hotkey user friendly names of shortcuts.
 // TODO: file already exists handling.
 // TODO: Add item: remember last dialog directory.
 // TODO: Create some sample shortcuts(like explorer, calculator, etc) on first start if db is empty.
-// TODO: RC1 block: icons, advanced tips.
 
 // FUTURE: grouping, recently opened.
 
@@ -116,7 +114,7 @@ namespace ShortcutBay
 			this.searhBox.appendText(q);
 			this.shellLinkListView.selectItemByIndex(i);
 			this.TopMost = Program.Settings.AlwaysOnTop;
-			this.globalKeyboardHook = new MainKykc.SystemHotkey(this.components);
+			this.globalKeyboardHook = new SystemHotkey(this.components);
 			Enum.TryParse(Program.Settings.ShortcutKey, out Shortcut shortcut);
 			this.globalKeyboardHook.Shortcut = shortcut;
 			this.globalKeyboardHook.Pressed += new System.EventHandler(this.toggleVisibility);

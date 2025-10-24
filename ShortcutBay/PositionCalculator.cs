@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
-using MainKykc;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Windows.Forms;

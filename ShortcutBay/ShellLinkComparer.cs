@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections;
 using System.Windows.Forms;
 
-namespace MainKykc
+namespace ShortcutBay
 {
 	public enum SortDirection
 	{

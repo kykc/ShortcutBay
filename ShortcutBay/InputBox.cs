@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 
-namespace MainKykc
+namespace ShortcutBay
 {
 	public class InputBox
 	{

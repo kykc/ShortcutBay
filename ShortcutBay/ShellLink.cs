@@ -5,7 +5,7 @@ using System.Xml;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace MainKykc
+namespace ShortcutBay
 {
 	public class ShellLink : IWshRuntimeLibrary.IWshShortcut
 	{

@@ -9,7 +9,7 @@ using System.Drawing.Drawing2D;
 using System.Runtime.Serialization.Formatters.Binary;
 using ShortcutBay;
 
-namespace MainKykc
+namespace ShortcutBay
 {
 	class Util
 	{

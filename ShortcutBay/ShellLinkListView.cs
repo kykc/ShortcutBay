@@ -5,7 +5,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
-using MainKykc;
 
 namespace ShortcutBay
 {
@@ -179,7 +178,7 @@ namespace ShortcutBay
 			if (item != null)
 			{
 				string ololo = item.SubItems[0].Text;
-				DialogResult res = MainKykc.InputBox.Show("Rename", "Input new name:", ref ololo);
+				DialogResult res = InputBox.Show("Rename", "Input new name:", ref ololo);
 				if (res == DialogResult.OK)
 				{
 					string from = item.SubItems[1].Text;

@@ -5,7 +5,7 @@ using System.Collections;
 using System.Xml;
 using System.IO;
 
-namespace MainKykc
+namespace ShortcutBay
 {
 	public class ShellLinkList : Hashtable
 	{

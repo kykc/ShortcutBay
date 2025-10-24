@@ -4,10 +4,9 @@ using System.Text;
 using System.IO;
 using System.Collections;
 using System.Drawing;
-using MainKykc;
 using System.Linq;
 
-namespace MainKykc
+namespace ShortcutBay
 {
 	class DirectoryCrawler
 	{

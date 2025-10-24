@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Text;
-using MainKykc;
 using System.IO;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Drawing;
 
-namespace MainKykc
+namespace ShortcutBay
 {
 	class ShellLinkCache : Hashtable
 	{

@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace MainKykc.Win32
+namespace ShortcutBay.Win32
 {
 	public class UxTheme
 	{
