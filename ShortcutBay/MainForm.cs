@@ -97,7 +97,7 @@ namespace ShortcutBay
 			this.initForm();
 			if (!Properties.Settings.Default.WasStartedBefore)
 			{
-				this.trayIcon.ShowBalloonTip(30, "Tips", TextCollection.Tips, new ToolTipIcon());
+				this.trayIcon.ShowBalloonTip(30, "Tips", Program.GetTipsText(), new ToolTipIcon());
 				Properties.Settings.Default.WasStartedBefore = true;
 				Properties.Settings.Default.Save();
 			}

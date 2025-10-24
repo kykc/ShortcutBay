@@ -47,7 +47,7 @@ namespace ShortcutBay
             this.linkLabel1.Text = wholeText;
             this.linkLabel1.Links.Add(preText.Length, (preText + linkText).Length, linkHref);
 
-            this.tipsTextBox.Text = TextCollection.Tips;
+            this.tipsTextBox.Text = Program.GetTipsText();
             Net9DarkModeStylingHacks.FixReadOnlyTextBox(tipsTextBox);
         }
 

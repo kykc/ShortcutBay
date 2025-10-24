@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ShortcutBay.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
@@ -15,8 +15,8 @@
       <Value Profile="(Default)">340, 500</Value>
     </Setting>
     <Setting Name="MainFormPositionArr" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" /&gt;</Value>
+      <Value Profile="(Default)">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
+&lt;ArrayOfString xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; /&gt;</Value>
     </Setting>
     <Setting Name="WasStartedBefore" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -35,3 +35,4 @@
     </Setting>
   </Settings>
 </SettingsFile>
+
