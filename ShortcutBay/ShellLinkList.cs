@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
@@ -11,8 +11,13 @@ namespace MainKykc
 	{
 		public void Add(ShellLink value)
 		{
-			string key = value.FullName;
-			base.Add(key, value);
+			// Crude masking if names collide
+			// TODO: remove this and work with vanilla data structures
+			string key = value.Name;
+			if (!base.ContainsKey(key))
+			{
+				base.Add(key, value);
+			}
 		}
 
 		public XmlDocument getCache()

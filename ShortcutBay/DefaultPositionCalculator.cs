@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -9,14 +9,16 @@ namespace ShortcutBay
 {
 	class DefaultPositionCalculator
 	{
-		public static Point getDefaultLocation()
+		public static Point getDefaultLocation(Form form)
 		{
-			MainForm form = Util.getMainForm();
-			Point retVal = new Point();
-			Rectangle desktopSize = Screen.PrimaryScreen.WorkingArea;
+			Point retVal = new Point(0, 0);
+			Rectangle? desktopSize = Screen.PrimaryScreen?.WorkingArea;
 
-			retVal.X = desktopSize.Width - Properties.Settings.Default.MainFormSize.Width + desktopSize.X;
-			retVal.Y = desktopSize.Height - Properties.Settings.Default.MainFormSize.Height + desktopSize.Y;
+			if (desktopSize.HasValue)
+			{
+				retVal.X = desktopSize.Value.Width - form.Width + desktopSize.Value.X;
+				retVal.Y = desktopSize.Value.Height - form.Height + desktopSize.Value.Y;
+			}
 
 			return retVal;
 		}

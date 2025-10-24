@@ -1,20 +1,22 @@
-﻿using System;
+using MainKykc.Win32;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
-using System.Drawing;
 
-namespace CodeProject
+namespace ShortcutBay
 {
-	class SearhTextBox : TextBox
+	class SearchTextBox : TextBox
 	{
-		public SearhTextBox()
+		public SearchTextBox()
 		{
 			this.SetStyle(ControlStyles.UserPaint, true);
 			this.Text = "";
 			this.isEmpty = true;
 			this.OnLeave(new EventArgs());
-			this.BackColor = System.Drawing.Color.White;
+			Net9DarkModeStylingHacks.ApplyColorsToSearchBox(this);
 			this.clearText();
 		}
 
@@ -26,22 +28,32 @@ namespace CodeProject
 				{
 					this.isEmpty = false;
 					this.Text = text;
-					this.ForeColor = System.Drawing.Color.Black;
+					this.ForeColor = System.Drawing.Color.LightGray;
 				}
 				else
 				{
+					this.ForeColor = Color.LightGray;
 					this.Text += text;
 				}
 			}
 		}
 
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			SolidBrush drawBrush = new SolidBrush(ForeColor);
-			e.Graphics.DrawString(Text, Font, drawBrush, 0f, 0f);
-		}
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+			var instance = this;
+			
+			Net9DarkModeStylingHacks.RedrawSearchBoxBorder(this, ref m);
+        }
 
-		public void clearText()
+        protected override void OnPaint(PaintEventArgs e)
+        {
+			// Otherwise text will always be gray as this control is disabled to prevent focus
+            SolidBrush drawBrush = new SolidBrush(ForeColor);
+            e.Graphics.DrawString(Text, Font, drawBrush, 0f, 0f);
+        }
+
+        public void clearText()
 		{
 			this.appendText("a");
 			while (!this.IsEmpty)
@@ -54,7 +66,7 @@ namespace CodeProject
 		{
 			if (this.IsEmpty)
 			{
-				; // You can think that this is usless. You're wrong.
+				; // You can think that this is useless. You're wrong.
 			}
 			else
 			{
@@ -74,7 +86,6 @@ namespace CodeProject
 				{
 					this.isEmpty = true;
 					this.Text = "search...";
-					this.ForeColor = System.Drawing.Color.Gray;
 				}
 			}
 		}

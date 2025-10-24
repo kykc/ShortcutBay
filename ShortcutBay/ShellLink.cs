@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
@@ -23,19 +23,16 @@ namespace MainKykc
 
 		public ShellLink(string path)
 		{
-			this.Load(path);
+			Load(path);
 		}
 
-		protected Image cachedIcon;
+		protected Image? cachedIcon;
 
 		public Image IconImage
 		{
 			get
 			{
-				if (this.cachedIcon == null)
-				{
-					this.cachedIcon = this.getIcon();
-				}
+				this.cachedIcon ??= this.getIcon();
 				return this.cachedIcon;
 			}
 			set
@@ -68,17 +65,20 @@ namespace MainKykc
 			else
 			{
 				Icon ico = Icon.FromHandle(hIcon);
-				retVal = ico.ToBitmap();
+				try
+				{
+					retVal = ico.ToBitmap();
+				}
+				catch (ArgumentException)
+				{
+					retVal = ShortcutBay.ImageCollection.GenericApp.ToBitmap();
+					Util.writeDebugInfo(""); //  TODO:
+				}
 				ico.Dispose();
 				Native.DestroyIcon(hIcon);
 			}
 
 			return retVal;
-		}
-
-		public void Load(string path)
-		{
-			this.linkObj = shellObj.CreateShortcut(path) as IWshRuntimeLibrary.IWshShortcut;
 		}
 
 		public string Arguments
@@ -161,6 +161,11 @@ namespace MainKykc
 			}
 		}
 
+		public void Load(string path)
+		{
+			linkObj = (shellObj.CreateShortcut(path) as IWshRuntimeLibrary.IWshShortcut)!;
+		}
+
 		public void Save()
 		{
 			this.linkObj.Save();
@@ -202,24 +207,27 @@ namespace MainKykc
 			}
 		}
 
-		public XmlElement XmlRepresentation
+		public XmlElement? XmlRepresentation
 		{
 			get
 			{
 				XmlDocument doc = new XmlDocument();
 
-				XmlElement element = (XmlElement)doc.AppendChild(doc.CreateElement("ShellLink"));
+				XmlElement? element = doc.AppendChild(doc.CreateElement("ShellLink")) as XmlElement;
 
-				XmlElement linkFilePathElement = (XmlElement)element.AppendChild(doc.CreateElement("linkFilePath"));
-				XmlElement cachedIconElement = (XmlElement)element.AppendChild(doc.CreateElement("cachedIcon"));
-				XmlElement hashElement = (XmlElement)element.AppendChild(doc.CreateElement("hashValue"));
+				XmlElement? linkFilePathElement = element?.AppendChild(doc.CreateElement("linkFilePath")) as XmlElement;
+				XmlElement? cachedIconElement = element?.AppendChild(doc.CreateElement("cachedIcon")) as XmlElement;
+				XmlElement? hashElement = element?.AppendChild(doc.CreateElement("hashValue")) as XmlElement;
 
-				linkFilePathElement.InnerText = this.FullName;
+				if (linkFilePathElement != null && cachedIconElement != null && hashElement != null)
+				{
+					linkFilePathElement.InnerText = this.FullName;
 
-				string iconString = Util.encodeIcon(this.IconImage);
+					string iconString = Util.encodeIcon(this.IconImage);
 
-				cachedIconElement.InnerText = iconString;
-				hashElement.InnerText = this.UniqueHash;
+					cachedIconElement.InnerText = iconString;
+					hashElement.InnerText = this.UniqueHash;
+				}
 
 				return element;
 			}

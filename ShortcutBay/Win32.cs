@@ -1,16 +1,25 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace MainKykc.Win32
 {
+	public class UxTheme
+	{
+        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
+        public extern static int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
+    }
+
 	public class User32
 	{
-		[DllImport("user32.dll")]
+        public const int WM_NCPAINT = 0x85;
+        [DllImport("user32.dll")]
 		public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vlc);
 		[DllImport("user32.dll")]
 		public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-	}
+        [DllImport("user32")]
+        public static extern IntPtr GetWindowDC(IntPtr hwnd);
+    }
 
 	public class Kernel32
 	{

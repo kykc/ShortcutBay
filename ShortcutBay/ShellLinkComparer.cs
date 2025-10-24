@@ -23,11 +23,11 @@ namespace MainKykc
 			this.m_direction = direction;
 		}
 
-		int IComparer.Compare(object x, object y)
+		int IComparer.Compare(object? x, object? y)
 		{
-			ListViewItem xx = (ListViewItem)x;
-			ListViewItem yy = (ListViewItem)y;
-			return xx.Name.CompareTo(yy.Name);
+			ListViewItem? xx = x as ListViewItem;
+			ListViewItem? yy = y as ListViewItem;
+			return xx?.Name?.CompareTo(yy?.Name) ?? 0;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Text;
@@ -90,7 +90,7 @@ namespace MainKykc
 			Hashtable item = this[hash] as Hashtable;
 			try
 			{
-				return item["cachedIcon"] as Image;
+				return item?["cachedIcon"] as Image;
 			}
 			catch (NullReferenceException e)
 			{

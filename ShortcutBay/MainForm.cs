@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,8 +24,8 @@ namespace ShortcutBay
 		protected SystemHotkey globalKeyboardHook;
 		protected ShellLinkList mainLinkList;
 		protected bool wasShown = false;
-		public PreferencesForm preferencesForm = null;
-		public HelpForm helpForm = null;
+		public PreferencesForm? preferencesForm = null;
+		public HelpForm? helpForm = null;
 		protected bool locked = false;
 
 		public void lockForm()
@@ -43,6 +43,7 @@ namespace ShortcutBay
 			return this.locked;
 		}
 
+		[DefaultValue(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool WasShown
 		{
 			get
@@ -73,14 +74,14 @@ namespace ShortcutBay
 			return this.shellLinkListView;
 		}
 
-		public void toggleVisibility(object sender, System.EventArgs e)
+		public void toggleVisibility(object? sender, System.EventArgs e)
 		{
 			if (!this.isLockedForm())
 			{
 				if (!(Util.isInFullScreenMode() && Properties.Settings.Default.ExcludeFullScreen))
 				{
 					bool wasVisible = this.Visible;
-					this.Size = Properties.Settings.Default.MainFormSize;
+					//qthis.Size = Properties.Settings.Default.MainFormSize;
 					Util.toggleVisibility(this);
 					if (wasVisible && !this.Visible)
 					{

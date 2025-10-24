@@ -57,13 +57,13 @@ namespace ShortcutBay
 
 		public void handleRefresh(object sender, EventArgs e)
 		{
-			Util.getMainForm().initForm();
+			Util.getMainForm()!.initForm();
 		}
 
 		public void handleClearCache(object sender, EventArgs e)
 		{
 			ShellLinkCache.clearCache();
-			Util.getMainForm().initForm();
+			Util.getMainForm()!.initForm();
 		}
 	}
 }

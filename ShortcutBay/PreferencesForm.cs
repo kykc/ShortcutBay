@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +11,8 @@ namespace ShortcutBay
 {
 	public partial class PreferencesForm : Form
 	{
-		public bool PreferencesChanged
+        [DefaultValue(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool PreferencesChanged
 		{
 			get
 			{
@@ -78,7 +79,8 @@ namespace ShortcutBay
 		private void PreferencesForm_Load(object sender, EventArgs e)
 		{
 			this.shortcutKeySelect.DataSource = Enum.GetValues(typeof(Shortcut));
-			this.toForm();
+            Net9DarkModeStylingHacks.ApplyTabColor(this.preferencesTabControl);
+            this.toForm();
 		}
 
 		private void toForm()
@@ -95,8 +97,19 @@ namespace ShortcutBay
 			Properties.Settings.Default.AlwaysOnTop = this.alwaysOnTop.Checked;
 			Properties.Settings.Default.HideOnLostFocus = this.hideOnLostFocus.Checked;
 			Properties.Settings.Default.ExcludeFullScreen = this.ignoreFullScreen.Checked;
-			Properties.Settings.Default.ShortcutKey = (Shortcut) shortcutKeySelect.SelectedValue;
-			Util.getMainForm().initForm();
+
+			var selectedShortcut = shortcutKeySelect.SelectedValue;
+
+			if (selectedShortcut != null)
+			{
+				Properties.Settings.Default.ShortcutKey = (Shortcut) selectedShortcut;
+			}
+			else
+			{
+				Properties.Settings.Default.ShortcutKey = Shortcut.CtrlQ;
+			}
+
+			Util.getMainForm()!.initForm();
 			this.PreferencesChanged = false;
 		}
 

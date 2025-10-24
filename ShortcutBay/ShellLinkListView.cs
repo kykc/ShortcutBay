@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Text;
@@ -41,6 +41,16 @@ namespace ShortcutBay
 			}
 			base.OnSelectedIndexChanged(e);
 		}
+
+        protected override void OnDpiChangedAfterParent(EventArgs e)
+        {
+            base.OnDpiChangedAfterParent(e);
+
+			if (this.Columns.Count > 0)
+			{
+				this.Columns[0].Width = this.Width - 25;
+			}
+        }
 
 		public void init(ShellLinkList list)
 		{
@@ -157,17 +167,10 @@ namespace ShortcutBay
 			}
 		}
 
-		public ListViewItem getSelectedItem()
+		public ListViewItem? getSelectedItem()
 		{
 			ShellLinkListView control = this;
-			if (control.SelectedItems.Count > 0)
-			{
-				return control.SelectedItems[0];
-			}
-			else
-			{
-				return null;
-			}
+			return control.SelectedItems.Count > 0 ? control.SelectedItems[0] : null;
 		}
 
 		public void handleRename()

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
@@ -55,7 +55,7 @@ namespace ShortcutBay
 			Properties.Settings.Default.MainFormPositionArr = retVal;
 		}
 
-		public static Point getPosition()
+		public static Point getPosition(Form form)
 		{			
 			Point retVal;
 
@@ -74,7 +74,7 @@ namespace ShortcutBay
 				}
 			}
 			
-			return DefaultPositionCalculator.getDefaultLocation();
+			return DefaultPositionCalculator.getDefaultLocation(form);
 		}
 	}
 }

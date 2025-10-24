@@ -9,7 +9,7 @@
       <Value Profile="(Default)">ShortcutBay</Value>
     </Setting>
     <Setting Name="Version" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">2.0 RC1</Value>
+      <Value Profile="(Default)">3.0</Value>
     </Setting>
     <Setting Name="MainFormSize" Type="System.Drawing.Size" Scope="Application">
       <Value Profile="(Default)">340, 500</Value>

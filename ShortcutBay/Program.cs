@@ -1,27 +1,28 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace ShortcutBay
 {
 	static class Program
 	{
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		/// 
+		public static MainForm MainForm { get; } = new();
+
 		[STAThread]
 		static void Main()
 		{
 			Application.EnableVisualStyles();
+			Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.ApplicationExit += new EventHandler(onExit);
-			Application.Run(new MainForm());
+            Application.SetColorMode(SystemColorMode.Dark);
+            Application.ApplicationExit += new EventHandler(onExit);
+			Application.Run(MainForm);
 		}
 
-		static void onExit(object sender, EventArgs e)
+		static void onExit(object? sender, EventArgs e)
 		{
 			Properties.Settings.Default.Save();
 		}
-	}
+    }
 }

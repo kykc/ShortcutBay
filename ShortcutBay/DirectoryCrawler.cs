@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Collections;
 using System.Drawing;
 using MainKykc;
+using System.Linq;
 
 namespace MainKykc
 {
@@ -12,14 +13,14 @@ namespace MainKykc
 	{
 		private string path;
 		protected const string FILE_FILTER = "*.lnk";
-		protected ArrayList foundFiles;
+		protected List<FileInfo> foundFiles;
 
-		public ArrayList getFoundFiles()
+		public List<FileInfo> getFoundFiles()
 		{
 			return this.foundFiles;
 		}
 
-		protected void setFoundFiles(ArrayList foundFiles)
+		protected void setFoundFiles(List<FileInfo> foundFiles)
 		{
 			this.foundFiles = foundFiles;
 		}
@@ -29,9 +30,9 @@ namespace MainKykc
 			return path;
 		}
 
-		private void setPath(string path)
+		private void setPath(string newPath)
 		{
-			this.path = path;
+			this.path = newPath;
 			this.omNomNom();
 		}
 
@@ -43,17 +44,31 @@ namespace MainKykc
 		protected void omNomNom()
 		{
 			DirectoryInfo di = new DirectoryInfo(this.getPath());
-			ArrayList rgFiles = new ArrayList();
-			rgFiles.AddRange(di.GetFiles(DirectoryCrawler.FILE_FILTER, SearchOption.AllDirectories));
-			this.setFoundFiles(rgFiles);
+			
+			this.setFoundFiles(di.GetFiles(DirectoryCrawler.FILE_FILTER, SearchOption.AllDirectories).ToList());
 		}
 
 		public ShellLinkList getList()
 		{
 			ShellLinkList retVal = new ShellLinkList();
 			ShellLinkCache cache = new ShellLinkCache(this.getPath());
-			
-			ArrayList foundFiles = this.getFoundFiles();
+
+            List<FileInfo> foundFiles = this.getFoundFiles();
+
+			// TODO: configurable
+			var banwords = new List<string> { "manual", "readme", "uninstall", "documentation", "donate", "help", "удалить" };
+
+			var banwordFilter = (ShellLink link) =>
+			{
+				var words = link.Name.Split(' ').Select(x => x.ToLower());
+
+				if (words.Intersect(banwords).Any())
+				{
+					return false;
+				}
+
+				return true;
+			};
 
 			foreach (FileInfo file in foundFiles)
 			{
@@ -64,7 +79,10 @@ namespace MainKykc
 					//System.Windows.Forms.MessageBox.Show(cachedIcon.ToString());
 					item.IconImage = cachedIcon;
 
-					retVal.Add(item);
+					if (banwordFilter(item))
+					{
+						retVal.Add(item);
+					}
 				}
 				catch (System.Runtime.InteropServices.COMException e)
 				{

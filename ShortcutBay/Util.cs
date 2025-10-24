@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
@@ -34,24 +34,33 @@ namespace MainKykc
 
 		public static string encodeIcon(Image icon)
 		{
-			MemoryStream ms = new MemoryStream();
-			BinaryFormatter bf = new BinaryFormatter();
-			bf.Serialize(ms, icon);
+			using MemoryStream ms = new MemoryStream();
+			//BinaryFormatter bf = new BinaryFormatter();
+			//bf.Serialize(ms, icon);
+			icon.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
 			return System.Convert.ToBase64String(ms.ToArray());
+			/*
+			 * using (MemoryStream ms = new MemoryStream())
+    {
+        // Save the image data into the stream in the specified format
+        imageIn.Save(ms, format);
+        
+        // Convert the stream content to a byte array
+        return ms.ToArray();
+    }*/
 		}
 
-		public static Image decodeIcon(string iconString)
+		public static Image? decodeIcon(string iconString)
 		{
 			byte[] cachedIconByteArr = System.Convert.FromBase64String(iconString);
-			BinaryFormatter bf = new BinaryFormatter();
+			//BinaryFormatter bf = new BinaryFormatter();
 			MemoryStream ms = new MemoryStream(cachedIconByteArr);
-			return bf.Deserialize(ms) as Image;
+			//return bf.Deserialize(ms) as Image;
+			return Image.FromStream(ms).Clone() as Image;
 		}
 
-		public static void toggleVisibility(object obj)
+		public static void toggleVisibility(MainForm form)
 		{
-			MainForm form = obj as MainForm;
-			//if (form.WindowState == FormWindowState.Normal)
 			if (form.Opacity > 0)
 			{
 				if (form.WasShown)
@@ -74,7 +83,7 @@ namespace MainKykc
 			form.Activate();
 			form.BringToFront();
 			form.Visible = true;
-			form.Location = PositionCalculator.getPosition();
+			form.Location = PositionCalculator.getPosition(form);
 			form.Opacity = 0.99;
 		}
 
@@ -118,7 +127,8 @@ namespace MainKykc
 				Util.writeDebugInfo(e.Message);
 				MessageBox.Show(e.Message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
-			Util.getMainForm().initForm();
+
+			Util.getMainForm()!.initForm();
 		}
 
 		public static void renameListItem(string from, string to)
@@ -134,7 +144,7 @@ namespace MainKykc
 				Util.writeDebugInfo(e.Message);
 				MessageBox.Show(e.Message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
-			Util.getMainForm().initForm();
+			Util.getMainForm()!.initForm();
 		}
 
 		public static bool isInFullScreenMode()
@@ -170,7 +180,7 @@ namespace MainKykc
 
 		public static MainForm getMainForm()
 		{
-			return Application.OpenForms[0] as MainForm;
+			return Program.MainForm;
 		}
 
 		public static void writeDebugInfo(string str)
