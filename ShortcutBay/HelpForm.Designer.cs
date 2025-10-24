@@ -94,7 +94,6 @@ namespace ShortcutBay
             richTextBox1.ReadOnly = true;
             richTextBox1.Size = new System.Drawing.Size(483, 174);
             richTextBox1.TabIndex = 6;
-            richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
             // linkLabel1
             // 

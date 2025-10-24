@@ -1,28 +1,56 @@
-﻿namespace ShortcutListGuiTest.Properties {
-    
-    
-    // This class allows you to handle specific events on the settings class:
-    //  The SettingChanging event is raised before a setting's value is changed.
-    //  The PropertyChanged event is raised after a setting's value is changed.
-    //  The SettingsLoaded event is raised after the setting values are loaded.
-    //  The SettingsSaving event is raised before the setting values are saved.
-    internal sealed partial class Settings {
-        
-        public Settings() {
-            // // To add event handlers for saving and changing settings, uncomment the lines below:
-            //
-            // this.SettingChanging += this.SettingChangingEventHandler;
-            //
-            // this.SettingsSaving += this.SettingsSavingEventHandler;
-            //
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace ShortcutBay
+{
+    public class Settings
+    {
+        public string DbPath { get; set; } = "db";
+        public string AppName { get; private set; } = "ShortcutBay";
+        public string Version { get; private set; } = "3.0";
+
+        public Dictionary<string, Point> MainFormPositions { get; set; } = new();
+        public bool WasStartedBefore { get; set; } = false;
+        public bool AlwaysOnTop { get; set; } = false;
+        public bool ExcludeFullScreen { get; set; } = true;
+        public bool HideOnLostFocus { get; set; } = false;
+        public string ShortcutKey { get; set; } = "CtrlQ";
+
+        public void Save()
+        {
+            using var fileStream = new FileStream(Path.Join("settings.json"), FileMode.OpenOrCreate, FileAccess.Write);
+            string settingsJson = JsonSerializer.Serialize<Settings>(this, SettingsJsonGenerationContext.Default.Settings);
+            StreamWriter streamWriter = new StreamWriter(fileStream);
+            streamWriter.Write(settingsJson);
+            streamWriter.Flush();
         }
-        
-        private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e) {
-            // Add code to handle the SettingChangingEvent event here.
-        }
-        
-        private void SettingsSavingEventHandler(object sender, System.ComponentModel.CancelEventArgs e) {
-            // Add code to handle the SettingsSaving event here.
+
+        public static Settings? Load()
+        {
+            var exeDir = Path.GetDirectoryName(System.Environment.ProcessPath);
+
+            if (exeDir != null)
+            {
+                using var fileStream = new FileStream(Path.Join("settings.json"), FileMode.OpenOrCreate, FileAccess.Read);
+
+                using var streamReader = new StreamReader(fileStream);
+                var json = streamReader.ReadToEnd();
+                try
+                {
+                    return JsonSerializer.Deserialize<Settings>(json, SettingsJsonGenerationContext.Default.Settings);
+
+                }
+                catch (Exception e)
+                {
+                    // TODO: log exception
+                }
+            }
+
+            return null;
         }
     }
+
+    [JsonSourceGenerationOptions(WriteIndented = true)]
+    [JsonSerializable(typeof(Settings))]
+    public partial class SettingsJsonGenerationContext: JsonSerializerContext { }
 }

@@ -104,7 +104,7 @@ namespace MainKykc
 			try
 			{
 				string path = 
-					Path.GetFullPath(ShortcutBay.Properties.Settings.Default.DbPath) + 
+					Path.GetFullPath(ShortcutBay.Program.Settings.DbPath) + 
 					Path.DirectorySeparatorChar + 
 					ShellLinkCache.CACHE_FILENAME;
 

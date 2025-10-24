@@ -85,28 +85,29 @@ namespace ShortcutBay
 
 		private void toForm()
 		{
-			this.alwaysOnTop.Checked = Properties.Settings.Default.AlwaysOnTop;
-			this.hideOnLostFocus.Checked = Properties.Settings.Default.HideOnLostFocus;
-			this.ignoreFullScreen.Checked = Properties.Settings.Default.ExcludeFullScreen;
-			this.shortcutKeySelect.SelectedItem = Properties.Settings.Default.ShortcutKey;
+			Enum.TryParse(Program.Settings.ShortcutKey, out Shortcut shortcut);
+			this.alwaysOnTop.Checked = Program.Settings.AlwaysOnTop;
+			this.hideOnLostFocus.Checked = Program.Settings.HideOnLostFocus;
+			this.ignoreFullScreen.Checked = Program.Settings.ExcludeFullScreen;
+			this.shortcutKeySelect.SelectedItem = shortcut;
 			this.PreferencesChanged = false;
 		}
 
 		private void fromForm()
 		{
-			Properties.Settings.Default.AlwaysOnTop = this.alwaysOnTop.Checked;
-			Properties.Settings.Default.HideOnLostFocus = this.hideOnLostFocus.Checked;
-			Properties.Settings.Default.ExcludeFullScreen = this.ignoreFullScreen.Checked;
+			Program.Settings.AlwaysOnTop = this.alwaysOnTop.Checked;
+			Program.Settings.HideOnLostFocus = this.hideOnLostFocus.Checked;
+			Program.Settings.ExcludeFullScreen = this.ignoreFullScreen.Checked;
 
 			var selectedShortcut = shortcutKeySelect.SelectedValue;
 
 			if (selectedShortcut != null)
 			{
-				Properties.Settings.Default.ShortcutKey = (Shortcut) selectedShortcut;
+				Program.Settings.ShortcutKey = selectedShortcut?.ToString() ?? "CtrlQ"; // TODO: check
 			}
 			else
 			{
-				Properties.Settings.Default.ShortcutKey = Shortcut.CtrlQ;
+				Program.Settings.ShortcutKey = nameof(Shortcut.CtrlQ);
 			}
 
 			Util.getMainForm()!.initForm();

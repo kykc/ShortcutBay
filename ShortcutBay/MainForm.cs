@@ -60,13 +60,10 @@ namespace ShortcutBay
 		{
 			this.toggleVisibility(this, new System.EventArgs());
 			InitializeComponent();
-			this.Text = Properties.Settings.Default.AppName + " " + Properties.Settings.Default.Version;
+			this.Text = Program.Settings.AppName + " " + Program.Settings.Version;
 			this.trayIcon.Text = this.Text;
 			this.trayIcon.Icon = ImageCollection.TrayIcon;
 			this.Icon = ImageCollection.MainIcon;
-
-			// First access to this property takes some time. So let's do this on load.
-			System.Collections.Specialized.StringCollection dummy = Properties.Settings.Default.MainFormPositionArr;
 		}
 
 		public ShellLinkListView getListView()
@@ -78,10 +75,10 @@ namespace ShortcutBay
 		{
 			if (!this.isLockedForm())
 			{
-				if (!(Util.isInFullScreenMode() && Properties.Settings.Default.ExcludeFullScreen))
+				if (!(Util.isInFullScreenMode() && Program.Settings.ExcludeFullScreen))
 				{
 					bool wasVisible = this.Visible;
-					//qthis.Size = Properties.Settings.Default.MainFormSize;
+					//qthis.Size = Program.Settings.MainFormSize;
 					Util.toggleVisibility(this);
 					if (wasVisible && !this.Visible)
 					{
@@ -95,17 +92,17 @@ namespace ShortcutBay
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			this.initForm();
-			if (!Properties.Settings.Default.WasStartedBefore)
+			if (!Program.Settings.WasStartedBefore)
 			{
 				this.trayIcon.ShowBalloonTip(30, "Tips", Program.GetTipsText(), new ToolTipIcon());
-				Properties.Settings.Default.WasStartedBefore = true;
-				Properties.Settings.Default.Save();
+				Program.Settings.WasStartedBefore = true;
+				Program.Settings.Save();
 			}
 		}
 
 		public void initForm()
 		{
-			string path = Path.GetFullPath(Properties.Settings.Default.DbPath);
+			string path = Path.GetFullPath(Program.Settings.DbPath);
 			if (!Directory.Exists(path))
 			{
 				Directory.CreateDirectory(path);
@@ -118,10 +115,10 @@ namespace ShortcutBay
 			this.searhBox.clearText();
 			this.searhBox.appendText(q);
 			this.shellLinkListView.selectItemByIndex(i);
-			this.TopMost = Properties.Settings.Default.AlwaysOnTop;
+			this.TopMost = Program.Settings.AlwaysOnTop;
 			this.globalKeyboardHook = new MainKykc.SystemHotkey(this.components);
-			//MessageBox.Show(Properties.Settings.Default.ShortcutKey.ToString());
-			this.globalKeyboardHook.Shortcut = Properties.Settings.Default.ShortcutKey;
+			Enum.TryParse(Program.Settings.ShortcutKey, out Shortcut shortcut);
+			this.globalKeyboardHook.Shortcut = shortcut;
 			this.globalKeyboardHook.Pressed += new System.EventHandler(this.toggleVisibility);
 		}
 
@@ -232,7 +229,7 @@ namespace ShortcutBay
 
 		private void MainForm_Deactivate(object sender, EventArgs e)
 		{
-			if (Properties.Settings.Default.HideOnLostFocus && !this.isLockedForm() && this.WasShown)
+			if (Program.Settings.HideOnLostFocus && !this.isLockedForm() && this.WasShown)
 			{
 				Util.properHide(this);
 			}

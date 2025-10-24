@@ -32,49 +32,17 @@ namespace ShortcutBay
 		public static void storePosition(int x, int y)
 		{
 			string desktopSize = PositionCalculator.getScreenIdentifier();
-			
-			StringCollection retVal = new StringCollection();
 
-			StringCollection col = Properties.Settings.Default.MainFormPositionArr;
-
-			foreach (string item in col)
-			{
-				string[] split = PositionCalculator.parseItem(item);
-				if (split[0] == desktopSize)
-				{
-					continue;
-				}
-				else
-				{
-					retVal.Add(item);
-				}
-			}
-
-			retVal.Add(PositionCalculator.genItem(desktopSize, x, y));
-
-			Properties.Settings.Default.MainFormPositionArr = retVal;
+			Program.Settings.MainFormPositions[desktopSize] = new Point(x, y);
 		}
 
 		public static Point getPosition(Form form)
-		{			
-			Point retVal;
-
-			//MessageBox.Show("ololo");
-			StringCollection col = Properties.Settings.Default.MainFormPositionArr;
-			//MessageBox.Show("ololo2");
+		{
 			string desktopSize = PositionCalculator.getScreenIdentifier();
-			
-			foreach (string item in col)
-			{
-				string[] split = PositionCalculator.parseItem(item);
-				if (split[0] == desktopSize)
-				{
-					retVal = new Point(Int32.Parse(split[1]), Int32.Parse(split[2]));
-					return retVal;
-				}
-			}
-			
-			return DefaultPositionCalculator.getDefaultLocation(form);
+
+			return Program.Settings.MainFormPositions.TryGetValue(desktopSize, out var position)
+				? position
+				: DefaultPositionCalculator.getDefaultLocation(form);
 		}
 	}
 }

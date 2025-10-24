@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text.Json;
 using System.Windows.Forms;
 
 namespace ShortcutBay
 {
 	static class Program
 	{
-		public static MainForm MainForm { get; } = new();
+		public static MainForm MainForm { get; private set; } = null!;
+		public static Settings Settings { get; private set; } = new();
 
 		public static string GetTipsText()
 		{
@@ -23,17 +25,20 @@ namespace ShortcutBay
 		[STAThread]
 		static void Main()
 		{
+			Program.Settings = Settings.Load() ?? Settings;
+
 			Application.EnableVisualStyles();
 			Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
 			Application.SetCompatibleTextRenderingDefault(false);
-            Application.SetColorMode(SystemColorMode.Dark);
-            Application.ApplicationExit += new EventHandler(onExit);
+			Application.SetColorMode(SystemColorMode.Dark);
+			Application.ApplicationExit += new EventHandler(onExit);
+			MainForm = new MainForm();
 			Application.Run(MainForm);
 		}
 
 		static void onExit(object? sender, EventArgs e)
 		{
-			Properties.Settings.Default.Save();
+			Program.Settings.Save();
 		}
     }
 }

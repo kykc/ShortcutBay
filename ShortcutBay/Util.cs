@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.IO;
-using ShortcutListGuiTest;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
@@ -156,7 +155,7 @@ namespace MainKykc
 		{
 			if (Util.isShellLink(file))
 			{
-				string path = Path.GetFullPath(ShortcutBay.Properties.Settings.Default.DbPath) +
+				string path = Path.GetFullPath(Program.Settings.DbPath) +
 					Path.DirectorySeparatorChar +
 					Path.GetFileNameWithoutExtension(file) +
 					".lnk";
@@ -166,7 +165,7 @@ namespace MainKykc
 			}
 			else
 			{
-				string path = Path.GetFullPath(ShortcutBay.Properties.Settings.Default.DbPath) +
+				string path = Path.GetFullPath(Program.Settings.DbPath) +
 					Path.DirectorySeparatorChar +
 					Path.GetFileNameWithoutExtension(file) +
 					".lnk";
