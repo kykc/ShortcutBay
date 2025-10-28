@@ -16,6 +16,7 @@ namespace ShortcutBay
 		{
 			this.Items.Add(Util.createToolStripMenuItem("Run", new EventHandler(handleRun)));
 			this.Items.Add(Util.createToolStripMenuItem("Run as Admin", new EventHandler(handleRunAsAdmin)));
+			this.Items.Add(Util.createToolStripMenuItem("Open File Location", new EventHandler(handleOpenFileLocation)));
 			this.Items.Add(Util.createToolStripMenuItem("&Add Item", new EventHandler(handleAdd)));
 			this.Items.Add(Util.createToolStripMenuItem("&Delete Item", new EventHandler(handleDelete)));
 			this.Items.Add(Util.createToolStripMenuItem("&Rename", new EventHandler(handleRename)));
@@ -58,6 +59,11 @@ namespace ShortcutBay
 		public void handleRun(object? sender, EventArgs e)
 		{
 			Util.getMainForm().getListView().handleExecute();
+		}
+
+		public void handleOpenFileLocation(object? sender, EventArgs e)
+		{
+			Util.getMainForm().getListView().handleOpenFileLocation();
 		}
 	}
 }

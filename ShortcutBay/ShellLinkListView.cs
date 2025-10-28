@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
@@ -163,6 +164,19 @@ namespace ShortcutBay
 					string path = this.SelectedItems[0].SubItems[1].Text;
 					Util.deleteListItem(path);
 				}
+			}
+		}
+
+		public void handleOpenFileLocation()
+		{
+			if (getSelectedItem() is var selectedItem)
+			{
+				string path = this.SelectedItems[0].SubItems[1].Text;
+				var shellLink = new ShellLink(path);
+
+				var dirName = Path.GetDirectoryName(shellLink.TargetPath);
+
+				Process.Start("explorer.exe", $"/select,\"{shellLink.TargetPath}\"");
 			}
 		}
 
