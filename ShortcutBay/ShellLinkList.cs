@@ -7,54 +7,54 @@ using System.IO;
 
 namespace ShortcutBay
 {
-	public class ShellLinkList : Hashtable
-	{
-		public void Add(ShellLink value)
-		{
-			// Crude masking if names collide
-			// TODO: remove this and work with vanilla data structures
-			string key = value.Name;
-			if (!base.ContainsKey(key))
-			{
-				base.Add(key, value);
-			}
-		}
+    public class ShellLinkList : Hashtable
+    {
+        public void Add(ShellLink value)
+        {
+            // Crude masking if names collide
+            // TODO: remove this and work with vanilla data structures
+            string key = value.Name;
+            if (!base.ContainsKey(key))
+            {
+                base.Add(key, value);
+            }
+        }
 
-		public XmlDocument getCache()
-		{
-			XmlDocument doc = new XmlDocument();
-			XmlDeclaration dec = doc.CreateXmlDeclaration("1.0", null, null);
-			doc.AppendChild(dec);
-			
-			XmlElement rootNode  = doc.CreateElement("Cache");
-			doc.InsertBefore(dec, doc.DocumentElement); 
-			doc.AppendChild(rootNode);
+        public XmlDocument getCache()
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlDeclaration dec = doc.CreateXmlDeclaration("1.0", null, null);
+            doc.AppendChild(dec);
 
-			foreach (ShellLink item in this.Values)
-			{
-				string xml = item.XmlRepresentation.OuterXml;
-				XmlDocumentFragment docFragment = doc.CreateDocumentFragment();
-				docFragment.InnerXml = xml;
-				doc.DocumentElement.AppendChild(docFragment);
-			}
-			
-			return doc;
-		}
+            XmlElement rootNode  = doc.CreateElement("Cache");
+            doc.InsertBefore(dec, doc.DocumentElement);
+            doc.AppendChild(rootNode);
 
-		public ShellLinkList find(string filter)
-		{
-			ShellLinkList retVal = new ShellLinkList();
+            foreach (ShellLink item in this.Values)
+            {
+                string xml = item.XmlRepresentation.OuterXml;
+                XmlDocumentFragment docFragment = doc.CreateDocumentFragment();
+                docFragment.InnerXml = xml;
+                doc.DocumentElement.AppendChild(docFragment);
+            }
 
-			foreach (string key in this.Keys)
-			{
-				ShellLink item = this[key] as ShellLink;
-				if (Path.GetFileNameWithoutExtension(item.FullName).ToLower().Contains(filter.ToLower()))
-				{
-					retVal.Add(item);
-				}
-			}
+            return doc;
+        }
 
-			return retVal;
-		}
-	}
+        public ShellLinkList find(string filter)
+        {
+            ShellLinkList retVal = new ShellLinkList();
+
+            foreach (string key in this.Keys)
+            {
+                ShellLink item = this[key] as ShellLink;
+                if (Path.GetFileNameWithoutExtension(item.FullName).ToLower().Contains(filter.ToLower()))
+                {
+                    retVal.Add(item);
+                }
+            }
+
+            return retVal;
+        }
+    }
 }

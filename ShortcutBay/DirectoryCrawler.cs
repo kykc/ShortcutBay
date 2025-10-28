@@ -8,90 +8,90 @@ using System.Linq;
 
 namespace ShortcutBay
 {
-	class DirectoryCrawler
-	{
-		private string path;
-		protected const string FILE_FILTER = "*.lnk";
-		protected List<FileInfo> foundFiles;
+    class DirectoryCrawler
+    {
+        private string path;
+        protected const string FILE_FILTER = "*.lnk";
+        protected List<FileInfo> foundFiles;
 
-		public List<FileInfo> getFoundFiles()
-		{
-			return this.foundFiles;
-		}
+        public List<FileInfo> getFoundFiles()
+        {
+            return this.foundFiles;
+        }
 
-		protected void setFoundFiles(List<FileInfo> foundFiles)
-		{
-			this.foundFiles = foundFiles;
-		}
+        protected void setFoundFiles(List<FileInfo> foundFiles)
+        {
+            this.foundFiles = foundFiles;
+        }
 
-		public string getPath()
-		{
-			return path;
-		}
+        public string getPath()
+        {
+            return path;
+        }
 
-		private void setPath(string newPath)
-		{
-			this.path = newPath;
-			this.omNomNom();
-		}
+        private void setPath(string newPath)
+        {
+            this.path = newPath;
+            this.omNomNom();
+        }
 
-		public DirectoryCrawler(string path)
-		{
-			this.setPath(path);
-		}
+        public DirectoryCrawler(string path)
+        {
+            this.setPath(path);
+        }
 
-		protected void omNomNom()
-		{
-			DirectoryInfo di = new DirectoryInfo(this.getPath());
-			
-			this.setFoundFiles(di.GetFiles(DirectoryCrawler.FILE_FILTER, SearchOption.AllDirectories).ToList());
-		}
+        protected void omNomNom()
+        {
+            DirectoryInfo di = new DirectoryInfo(this.getPath());
 
-		public ShellLinkList getList()
-		{
-			ShellLinkList retVal = new ShellLinkList();
-			ShellLinkCache cache = new ShellLinkCache(this.getPath());
+            this.setFoundFiles(di.GetFiles(DirectoryCrawler.FILE_FILTER, SearchOption.AllDirectories).ToList());
+        }
+
+        public ShellLinkList getList()
+        {
+            ShellLinkList retVal = new ShellLinkList();
+            ShellLinkCache cache = new ShellLinkCache(this.getPath());
 
             List<FileInfo> foundFiles = this.getFoundFiles();
 
-			// TODO: configurable
-			var banwords = new List<string> { "manual", "readme", "uninstall", "documentation", "donate", "help", "удалить" };
+            // TODO: configurable
+            var banwords = new List<string> { "manual", "readme", "uninstall", "documentation", "donate", "help", "удалить" };
 
-			var banwordFilter = (ShellLink link) =>
-			{
-				var words = link.Name.Split(' ').Select(x => x.ToLower());
+            var banwordFilter = (ShellLink link) =>
+            {
+                var words = link.Name.Split(' ').Select(x => x.ToLower());
 
-				if (words.Intersect(banwords).Any())
-				{
-					return false;
-				}
+                if (words.Intersect(banwords).Any())
+                {
+                    return false;
+                }
 
-				return true;
-			};
+                return true;
+            };
 
-			foreach (FileInfo file in foundFiles)
-			{
-				try
-				{
-					ShellLink item = new ShellLink(file.FullName);
-					Image cachedIcon = cache.getCachedIcon(item.UniqueHash);
-					//System.Windows.Forms.MessageBox.Show(cachedIcon.ToString());
-					item.IconImage = cachedIcon;
+            foreach (FileInfo file in foundFiles)
+            {
+                try
+                {
+                    ShellLink item = new ShellLink(file.FullName);
+                    Image cachedIcon = cache.getCachedIcon(item.UniqueHash);
+                    //System.Windows.Forms.MessageBox.Show(cachedIcon.ToString());
+                    item.IconImage = cachedIcon;
 
-					if (banwordFilter(item))
-					{
-						retVal.Add(item);
-					}
-				}
-				catch (System.Runtime.InteropServices.COMException e)
-				{
-					Util.writeDebugInfo(e.Message);
-				}
-			}
+                    if (banwordFilter(item))
+                    {
+                        retVal.Add(item);
+                    }
+                }
+                catch (System.Runtime.InteropServices.COMException e)
+                {
+                    Util.writeDebugInfo(e.Message);
+                }
+            }
 
-			cache.storeCache(retVal.getCache().OuterXml);
+            cache.storeCache(retVal.getCache().OuterXml);
 
-			return retVal;
-		}
-	}
+            return retVal;
+        }
+    }
 }

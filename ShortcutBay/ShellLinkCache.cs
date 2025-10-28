@@ -9,110 +9,110 @@ using System.Drawing;
 
 namespace ShortcutBay
 {
-	class ShellLinkCache : Hashtable
-	{
-		protected const string CACHE_FILENAME = "cache.xml";
-		protected string path;
-		public string getPath()
-		{
-			return this.path;
-		}
+    class ShellLinkCache : Hashtable
+    {
+        protected const string CACHE_FILENAME = "cache.xml";
+        protected string path;
+        public string getPath()
+        {
+            return this.path;
+        }
 
-		protected void setPath(string path)
-		{
-			this.path = path;
-		}
+        protected void setPath(string path)
+        {
+            this.path = path;
+        }
 
-		public ShellLinkCache(string path)
-		{
-			string fullName = ShellLinkCache.getCacheFullname(path);
-			this.setPath(path);
-			if (File.Exists(fullName))
-			{
-				XmlDocument doc = new XmlDocument();
-				doc.Load(fullName);
+        public ShellLinkCache(string path)
+        {
+            string fullName = ShellLinkCache.getCacheFullname(path);
+            this.setPath(path);
+            if (File.Exists(fullName))
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(fullName);
 
-				foreach (XmlNode node in doc.DocumentElement.ChildNodes)
-				{
-					if (node.Name == "ShellLink")
-					{
-						Hashtable cached = new Hashtable();
-						string key = null;
+                foreach (XmlNode node in doc.DocumentElement.ChildNodes)
+                {
+                    if (node.Name == "ShellLink")
+                    {
+                        Hashtable cached = new Hashtable();
+                        string key = null;
 
-						foreach (XmlNode propNode in node.ChildNodes)
-						{
-							if (propNode.Name == "hashValue")
-							{
-								key = propNode.InnerText;
-							}
-							else
-							{
-								cached.Add(propNode.Name, propNode.InnerText);
-							}
-						}
+                        foreach (XmlNode propNode in node.ChildNodes)
+                        {
+                            if (propNode.Name == "hashValue")
+                            {
+                                key = propNode.InnerText;
+                            }
+                            else
+                            {
+                                cached.Add(propNode.Name, propNode.InnerText);
+                            }
+                        }
 
-						this.Add(key, cached);
-					}
-				}
-				this.decodeAfterXml();
-			}
-		}
+                        this.Add(key, cached);
+                    }
+                }
+                this.decodeAfterXml();
+            }
+        }
 
-		protected void decodeAfterXml()
-		{
-			foreach (string key in this.Keys)
-			{
-				Hashtable item = this[key] as Hashtable;
-				string iconString = item["cachedIcon"] as string;
-				item["cachedIcon"] = Util.decodeIcon(iconString);
-			}
-		}
+        protected void decodeAfterXml()
+        {
+            foreach (string key in this.Keys)
+            {
+                Hashtable item = this[key] as Hashtable;
+                string iconString = item["cachedIcon"] as string;
+                item["cachedIcon"] = Util.decodeIcon(iconString);
+            }
+        }
 
-		protected static string getCacheFullname(string path)
-		{
-			return path + "/" + ShellLinkCache.CACHE_FILENAME;
-		}
+        protected static string getCacheFullname(string path)
+        {
+            return path + "/" + ShellLinkCache.CACHE_FILENAME;
+        }
 
-		public Hashtable getCachedItem(string hash)
-		{
-			Hashtable retVal = this[hash] as Hashtable;
-			return retVal;
-		}
+        public Hashtable getCachedItem(string hash)
+        {
+            Hashtable retVal = this[hash] as Hashtable;
+            return retVal;
+        }
 
-		public void storeCache(string xml)
-		{
-			File.WriteAllText(ShellLinkCache.getCacheFullname(this.getPath()), xml);
-		}
+        public void storeCache(string xml)
+        {
+            File.WriteAllText(ShellLinkCache.getCacheFullname(this.getPath()), xml);
+        }
 
-		public Image getCachedIcon(string hash)
-		{
-			Hashtable item = this[hash] as Hashtable;
-			try
-			{
-				return item?["cachedIcon"] as Image;
-			}
-			catch (NullReferenceException e)
-			{
-				Util.writeDebugInfo(e.Message);
-				return null;
-			}
-		}
+        public Image getCachedIcon(string hash)
+        {
+            Hashtable item = this[hash] as Hashtable;
+            try
+            {
+                return item?["cachedIcon"] as Image;
+            }
+            catch (NullReferenceException e)
+            {
+                Util.writeDebugInfo(e.Message);
+                return null;
+            }
+        }
 
-		public static void clearCache()
-		{
-			try
-			{
-				string path = 
-					Path.GetFullPath(ShortcutBay.Program.Settings.DbPath) + 
-					Path.DirectorySeparatorChar + 
-					ShellLinkCache.CACHE_FILENAME;
+        public static void clearCache()
+        {
+            try
+            {
+                string path =
+                    Path.GetFullPath(ShortcutBay.Program.Settings.DbPath) +
+                    Path.DirectorySeparatorChar +
+                    ShellLinkCache.CACHE_FILENAME;
 
-				File.Delete(path);
-			}
-			catch (Exception e)
-			{
-				Util.writeDebugInfo(e.Message);
-			}
-		}
-	}
+                File.Delete(path);
+            }
+            catch (Exception e)
+            {
+                Util.writeDebugInfo(e.Message);
+            }
+        }
+    }
 }
