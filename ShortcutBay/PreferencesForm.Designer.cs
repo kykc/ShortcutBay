@@ -20,245 +20,265 @@
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			this.preferencesTabControl = new System.Windows.Forms.TabControl();
-			this.generalPreferencesTab = new System.Windows.Forms.TabPage();
-			this.hotkeySettingsBox = new System.Windows.Forms.GroupBox();
-			this.shortcutKeySelect = new System.Windows.Forms.ComboBox();
-			this.uiSettingsBox = new System.Windows.Forms.GroupBox();
-			this.ignoreFullScreen = new System.Windows.Forms.CheckBox();
-			this.hideOnLostFocus = new System.Windows.Forms.CheckBox();
-			this.alwaysOnTop = new System.Windows.Forms.CheckBox();
-			this.advancedPreferencesTab = new System.Windows.Forms.TabPage();
-			this.cacheRefreshGroup = new System.Windows.Forms.GroupBox();
-			this.resetPositionButton = new System.Windows.Forms.Button();
-			this.clearCacheButton = new System.Windows.Forms.Button();
-			this.refreshListButton = new System.Windows.Forms.Button();
-			this.preferencesOk = new System.Windows.Forms.Button();
-			this.preferencesCancel = new System.Windows.Forms.Button();
-			this.preferencesApply = new System.Windows.Forms.Button();
-			this.preferencesTabControl.SuspendLayout();
-			this.generalPreferencesTab.SuspendLayout();
-			this.hotkeySettingsBox.SuspendLayout();
-			this.uiSettingsBox.SuspendLayout();
-			this.advancedPreferencesTab.SuspendLayout();
-			this.cacheRefreshGroup.SuspendLayout();
-			this.SuspendLayout();
-			// 
-			// preferencesTabControl
-			// 
-			this.preferencesTabControl.Controls.Add(this.generalPreferencesTab);
-			this.preferencesTabControl.Controls.Add(this.advancedPreferencesTab);
-			this.preferencesTabControl.Location = new System.Drawing.Point(12, 12);
-			this.preferencesTabControl.Name = "preferencesTabControl";
-			this.preferencesTabControl.SelectedIndex = 0;
-			this.preferencesTabControl.Size = new System.Drawing.Size(396, 318);
-			this.preferencesTabControl.TabIndex = 0;
-			// 
-			// generalPreferencesTab
-			// 
-			this.generalPreferencesTab.Controls.Add(this.hotkeySettingsBox);
-			this.generalPreferencesTab.Controls.Add(this.uiSettingsBox);
-			this.generalPreferencesTab.Location = new System.Drawing.Point(4, 22);
-			this.generalPreferencesTab.Name = "generalPreferencesTab";
-			this.generalPreferencesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.generalPreferencesTab.Size = new System.Drawing.Size(388, 292);
-			this.generalPreferencesTab.TabIndex = 0;
-			this.generalPreferencesTab.Text = "General";
-			this.generalPreferencesTab.UseVisualStyleBackColor = true;
-			// 
-			// hotkeySettingsBox
-			// 
-			this.hotkeySettingsBox.Controls.Add(this.shortcutKeySelect);
-			this.hotkeySettingsBox.Location = new System.Drawing.Point(6, 102);
-			this.hotkeySettingsBox.Name = "hotkeySettingsBox";
-			this.hotkeySettingsBox.Size = new System.Drawing.Size(376, 51);
-			this.hotkeySettingsBox.TabIndex = 1;
-			this.hotkeySettingsBox.TabStop = false;
-			this.hotkeySettingsBox.Text = "Shortcut Key Settings";
-			// 
-			// shortcutKeySelect
-			// 
-			this.shortcutKeySelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.shortcutKeySelect.FormattingEnabled = true;
-			this.shortcutKeySelect.Location = new System.Drawing.Point(6, 19);
-			this.shortcutKeySelect.Name = "shortcutKeySelect";
-			this.shortcutKeySelect.Size = new System.Drawing.Size(120, 21);
-			this.shortcutKeySelect.TabIndex = 0;
-			this.shortcutKeySelect.SelectedValueChanged += new System.EventHandler(this.shortcutKeySelect_SelectedValueChanged);
-			// 
-			// uiSettingsBox
-			// 
-			this.uiSettingsBox.Controls.Add(this.ignoreFullScreen);
-			this.uiSettingsBox.Controls.Add(this.hideOnLostFocus);
-			this.uiSettingsBox.Controls.Add(this.alwaysOnTop);
-			this.uiSettingsBox.Location = new System.Drawing.Point(6, 6);
-			this.uiSettingsBox.Name = "uiSettingsBox";
-			this.uiSettingsBox.Size = new System.Drawing.Size(379, 90);
-			this.uiSettingsBox.TabIndex = 0;
-			this.uiSettingsBox.TabStop = false;
-			this.uiSettingsBox.Text = "UI Settings";
-			// 
-			// ignoreFullScreen
-			// 
-			this.ignoreFullScreen.AutoSize = true;
-			this.ignoreFullScreen.Location = new System.Drawing.Point(6, 65);
-			this.ignoreFullScreen.Name = "ignoreFullScreen";
-			this.ignoreFullScreen.Size = new System.Drawing.Size(318, 17);
-			this.ignoreFullScreen.TabIndex = 2;
-			this.ignoreFullScreen.Text = "Ignore hotkey when fullscreen mode (video or game) detected";
-			this.ignoreFullScreen.UseVisualStyleBackColor = true;
-			this.ignoreFullScreen.CheckedChanged += new System.EventHandler(this.ignoreFullScreen_CheckedChanged);
-			// 
-			// hideOnLostFocus
-			// 
-			this.hideOnLostFocus.AutoSize = true;
-			this.hideOnLostFocus.Location = new System.Drawing.Point(6, 42);
-			this.hideOnLostFocus.Name = "hideOnLostFocus";
-			this.hideOnLostFocus.Size = new System.Drawing.Size(120, 17);
-			this.hideOnLostFocus.TabIndex = 1;
-			this.hideOnLostFocus.Text = "Hide On Lost Focus";
-			this.hideOnLostFocus.UseVisualStyleBackColor = true;
-			this.hideOnLostFocus.CheckedChanged += new System.EventHandler(this.hideOnLostFocus_CheckedChanged);
-			// 
-			// alwaysOnTop
-			// 
-			this.alwaysOnTop.AutoSize = true;
-			this.alwaysOnTop.Location = new System.Drawing.Point(6, 19);
-			this.alwaysOnTop.Name = "alwaysOnTop";
-			this.alwaysOnTop.Size = new System.Drawing.Size(98, 17);
-			this.alwaysOnTop.TabIndex = 0;
-			this.alwaysOnTop.Text = "Always On Top";
-			this.alwaysOnTop.UseVisualStyleBackColor = true;
-			this.alwaysOnTop.CheckedChanged += new System.EventHandler(this.alwaysOnTop_CheckedChanged);
-			// 
-			// advancedPreferencesTab
-			// 
-			this.advancedPreferencesTab.Controls.Add(this.cacheRefreshGroup);
-			this.advancedPreferencesTab.Location = new System.Drawing.Point(4, 22);
-			this.advancedPreferencesTab.Name = "advancedPreferencesTab";
-			this.advancedPreferencesTab.Padding = new System.Windows.Forms.Padding(3);
-			this.advancedPreferencesTab.Size = new System.Drawing.Size(388, 292);
-			this.advancedPreferencesTab.TabIndex = 1;
-			this.advancedPreferencesTab.Text = "Advanced";
-			this.advancedPreferencesTab.UseVisualStyleBackColor = true;
-			// 
-			// cacheRefreshGroup
-			// 
-			this.cacheRefreshGroup.Controls.Add(this.resetPositionButton);
-			this.cacheRefreshGroup.Controls.Add(this.clearCacheButton);
-			this.cacheRefreshGroup.Controls.Add(this.refreshListButton);
-			this.cacheRefreshGroup.Location = new System.Drawing.Point(6, 6);
-			this.cacheRefreshGroup.Name = "cacheRefreshGroup";
-			this.cacheRefreshGroup.Size = new System.Drawing.Size(376, 50);
-			this.cacheRefreshGroup.TabIndex = 2;
-			this.cacheRefreshGroup.TabStop = false;
-			this.cacheRefreshGroup.Text = "Troubleshooting";
-			// 
-			// resetPositionButton
-			// 
-			this.resetPositionButton.Location = new System.Drawing.Point(216, 19);
-			this.resetPositionButton.Name = "resetPositionButton";
-			this.resetPositionButton.Size = new System.Drawing.Size(154, 23);
-			this.resetPositionButton.TabIndex = 2;
-			this.resetPositionButton.Text = "Reset Main Window Position";
-			this.resetPositionButton.UseVisualStyleBackColor = true;
-			this.resetPositionButton.Click += new System.EventHandler(this.resetPositionButton_Click);
-			// 
-			// clearCacheButton
-			// 
-			this.clearCacheButton.Location = new System.Drawing.Point(6, 19);
-			this.clearCacheButton.Name = "clearCacheButton";
-			this.clearCacheButton.Size = new System.Drawing.Size(108, 23);
-			this.clearCacheButton.TabIndex = 0;
-			this.clearCacheButton.Text = "Clear Cache";
-			this.clearCacheButton.UseVisualStyleBackColor = true;
-			this.clearCacheButton.Click += new System.EventHandler(this.clearCacheButton_Click);
-			// 
-			// refreshListButton
-			// 
-			this.refreshListButton.Location = new System.Drawing.Point(120, 19);
-			this.refreshListButton.Name = "refreshListButton";
-			this.refreshListButton.Size = new System.Drawing.Size(90, 23);
-			this.refreshListButton.TabIndex = 1;
-			this.refreshListButton.Text = "Refresh List";
-			this.refreshListButton.UseVisualStyleBackColor = true;
-			this.refreshListButton.Click += new System.EventHandler(this.refreshListButton_Click);
-			// 
-			// preferencesOk
-			// 
-			this.preferencesOk.Location = new System.Drawing.Point(171, 336);
-			this.preferencesOk.Name = "preferencesOk";
-			this.preferencesOk.Size = new System.Drawing.Size(75, 23);
-			this.preferencesOk.TabIndex = 1;
-			this.preferencesOk.Text = "OK";
-			this.preferencesOk.UseVisualStyleBackColor = true;
-			this.preferencesOk.Click += new System.EventHandler(this.preferencesOk_Click);
-			// 
-			// preferencesCancel
-			// 
-			this.preferencesCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.preferencesCancel.Location = new System.Drawing.Point(252, 336);
-			this.preferencesCancel.Name = "preferencesCancel";
-			this.preferencesCancel.Size = new System.Drawing.Size(75, 23);
-			this.preferencesCancel.TabIndex = 2;
-			this.preferencesCancel.Text = "Cancel";
-			this.preferencesCancel.UseVisualStyleBackColor = true;
-			this.preferencesCancel.Click += new System.EventHandler(this.preferencesCancel_Click);
-			// 
-			// preferencesApply
-			// 
-			this.preferencesApply.Enabled = false;
-			this.preferencesApply.Location = new System.Drawing.Point(333, 336);
-			this.preferencesApply.Name = "preferencesApply";
-			this.preferencesApply.Size = new System.Drawing.Size(75, 23);
-			this.preferencesApply.TabIndex = 3;
-			this.preferencesApply.Text = "Apply";
-			this.preferencesApply.UseVisualStyleBackColor = true;
-			this.preferencesApply.Click += new System.EventHandler(this.preferencesApply_Click);
-			// 
-			// PreferencesForm
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.CancelButton = this.preferencesCancel;
-			this.ClientSize = new System.Drawing.Size(420, 365);
-			this.ControlBox = false;
-			this.Controls.Add(this.preferencesApply);
-			this.Controls.Add(this.preferencesCancel);
-			this.Controls.Add(this.preferencesOk);
-			this.Controls.Add(this.preferencesTabControl);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
-			this.Name = "PreferencesForm";
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "PreferencesForm";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PreferencesForm_FormClosing);
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PreferencesForm_FormClosed);
-			this.Load += new System.EventHandler(this.PreferencesForm_Load);
-			this.preferencesTabControl.ResumeLayout(false);
-			this.generalPreferencesTab.ResumeLayout(false);
-			this.hotkeySettingsBox.ResumeLayout(false);
-			this.uiSettingsBox.ResumeLayout(false);
-			this.uiSettingsBox.PerformLayout();
-			this.advancedPreferencesTab.ResumeLayout(false);
-			this.cacheRefreshGroup.ResumeLayout(false);
-			this.ResumeLayout(false);
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            preferencesTabControl = new System.Windows.Forms.TabControl();
+            generalPreferencesTab = new System.Windows.Forms.TabPage();
+            hotkeySettingsBox = new System.Windows.Forms.GroupBox();
+            shortcutKeySelect = new System.Windows.Forms.ComboBox();
+            uiSettingsBox = new System.Windows.Forms.GroupBox();
+            ignoreFullScreen = new System.Windows.Forms.CheckBox();
+            hideOnLostFocus = new System.Windows.Forms.CheckBox();
+            alwaysOnTop = new System.Windows.Forms.CheckBox();
+            advancedPreferencesTab = new System.Windows.Forms.TabPage();
+            cacheRefreshGroup = new System.Windows.Forms.GroupBox();
+            resetPositionButton = new System.Windows.Forms.Button();
+            clearCacheButton = new System.Windows.Forms.Button();
+            refreshListButton = new System.Windows.Forms.Button();
+            preferencesOk = new System.Windows.Forms.Button();
+            preferencesCancel = new System.Windows.Forms.Button();
+            preferencesApply = new System.Windows.Forms.Button();
+            preferencesTabControl.SuspendLayout();
+            generalPreferencesTab.SuspendLayout();
+            hotkeySettingsBox.SuspendLayout();
+            uiSettingsBox.SuspendLayout();
+            advancedPreferencesTab.SuspendLayout();
+            cacheRefreshGroup.SuspendLayout();
+            SuspendLayout();
+            // 
+            // preferencesTabControl
+            // 
+            preferencesTabControl.Controls.Add(generalPreferencesTab);
+            preferencesTabControl.Controls.Add(advancedPreferencesTab);
+            preferencesTabControl.Location = new System.Drawing.Point(14, 14);
+            preferencesTabControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            preferencesTabControl.Name = "preferencesTabControl";
+            preferencesTabControl.SelectedIndex = 0;
+            preferencesTabControl.Size = new System.Drawing.Size(462, 367);
+            preferencesTabControl.TabIndex = 0;
+            // 
+            // generalPreferencesTab
+            // 
+            generalPreferencesTab.Controls.Add(hotkeySettingsBox);
+            generalPreferencesTab.Controls.Add(uiSettingsBox);
+            generalPreferencesTab.Location = new System.Drawing.Point(4, 24);
+            generalPreferencesTab.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            generalPreferencesTab.Name = "generalPreferencesTab";
+            generalPreferencesTab.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            generalPreferencesTab.Size = new System.Drawing.Size(454, 339);
+            generalPreferencesTab.TabIndex = 0;
+            generalPreferencesTab.Text = "General";
+            generalPreferencesTab.UseVisualStyleBackColor = true;
+            // 
+            // hotkeySettingsBox
+            // 
+            hotkeySettingsBox.Controls.Add(shortcutKeySelect);
+            hotkeySettingsBox.Location = new System.Drawing.Point(7, 118);
+            hotkeySettingsBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            hotkeySettingsBox.Name = "hotkeySettingsBox";
+            hotkeySettingsBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            hotkeySettingsBox.Size = new System.Drawing.Size(439, 59);
+            hotkeySettingsBox.TabIndex = 1;
+            hotkeySettingsBox.TabStop = false;
+            hotkeySettingsBox.Text = "Shortcut Key Settings";
+            // 
+            // shortcutKeySelect
+            // 
+            shortcutKeySelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            shortcutKeySelect.FormattingEnabled = true;
+            shortcutKeySelect.Location = new System.Drawing.Point(7, 22);
+            shortcutKeySelect.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            shortcutKeySelect.Name = "shortcutKeySelect";
+            shortcutKeySelect.Size = new System.Drawing.Size(139, 23);
+            shortcutKeySelect.TabIndex = 0;
+            shortcutKeySelect.SelectedValueChanged += shortcutKeySelect_SelectedValueChanged;
+            // 
+            // uiSettingsBox
+            // 
+            uiSettingsBox.Controls.Add(ignoreFullScreen);
+            uiSettingsBox.Controls.Add(hideOnLostFocus);
+            uiSettingsBox.Controls.Add(alwaysOnTop);
+            uiSettingsBox.Location = new System.Drawing.Point(7, 7);
+            uiSettingsBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            uiSettingsBox.Name = "uiSettingsBox";
+            uiSettingsBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            uiSettingsBox.Size = new System.Drawing.Size(442, 104);
+            uiSettingsBox.TabIndex = 0;
+            uiSettingsBox.TabStop = false;
+            uiSettingsBox.Text = "UI Settings";
+            // 
+            // ignoreFullScreen
+            // 
+            ignoreFullScreen.AutoSize = true;
+            ignoreFullScreen.Location = new System.Drawing.Point(7, 75);
+            ignoreFullScreen.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            ignoreFullScreen.Name = "ignoreFullScreen";
+            ignoreFullScreen.Size = new System.Drawing.Size(355, 19);
+            ignoreFullScreen.TabIndex = 2;
+            ignoreFullScreen.Text = "Ignore hotkey when fullscreen mode (video or game) detected";
+            ignoreFullScreen.UseVisualStyleBackColor = true;
+            ignoreFullScreen.CheckedChanged += ignoreFullScreen_CheckedChanged;
+            // 
+            // hideOnLostFocus
+            // 
+            hideOnLostFocus.AutoSize = true;
+            hideOnLostFocus.Location = new System.Drawing.Point(7, 48);
+            hideOnLostFocus.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            hideOnLostFocus.Name = "hideOnLostFocus";
+            hideOnLostFocus.Size = new System.Drawing.Size(129, 19);
+            hideOnLostFocus.TabIndex = 1;
+            hideOnLostFocus.Text = "Hide On Lost Focus";
+            hideOnLostFocus.UseVisualStyleBackColor = true;
+            hideOnLostFocus.CheckedChanged += hideOnLostFocus_CheckedChanged;
+            // 
+            // alwaysOnTop
+            // 
+            alwaysOnTop.AutoSize = true;
+            alwaysOnTop.Location = new System.Drawing.Point(7, 22);
+            alwaysOnTop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            alwaysOnTop.Name = "alwaysOnTop";
+            alwaysOnTop.Size = new System.Drawing.Size(105, 19);
+            alwaysOnTop.TabIndex = 0;
+            alwaysOnTop.Text = "Always On Top";
+            alwaysOnTop.UseVisualStyleBackColor = true;
+            alwaysOnTop.CheckedChanged += alwaysOnTop_CheckedChanged;
+            // 
+            // advancedPreferencesTab
+            // 
+            advancedPreferencesTab.Controls.Add(cacheRefreshGroup);
+            advancedPreferencesTab.Location = new System.Drawing.Point(4, 24);
+            advancedPreferencesTab.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            advancedPreferencesTab.Name = "advancedPreferencesTab";
+            advancedPreferencesTab.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            advancedPreferencesTab.Size = new System.Drawing.Size(454, 339);
+            advancedPreferencesTab.TabIndex = 1;
+            advancedPreferencesTab.Text = "Advanced";
+            advancedPreferencesTab.UseVisualStyleBackColor = true;
+            // 
+            // cacheRefreshGroup
+            // 
+            cacheRefreshGroup.Controls.Add(resetPositionButton);
+            cacheRefreshGroup.Controls.Add(clearCacheButton);
+            cacheRefreshGroup.Controls.Add(refreshListButton);
+            cacheRefreshGroup.Location = new System.Drawing.Point(7, 7);
+            cacheRefreshGroup.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            cacheRefreshGroup.Name = "cacheRefreshGroup";
+            cacheRefreshGroup.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            cacheRefreshGroup.Size = new System.Drawing.Size(439, 58);
+            cacheRefreshGroup.TabIndex = 2;
+            cacheRefreshGroup.TabStop = false;
+            cacheRefreshGroup.Text = "Troubleshooting";
+            // 
+            // resetPositionButton
+            // 
+            resetPositionButton.Location = new System.Drawing.Point(252, 22);
+            resetPositionButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            resetPositionButton.Name = "resetPositionButton";
+            resetPositionButton.Size = new System.Drawing.Size(180, 27);
+            resetPositionButton.TabIndex = 2;
+            resetPositionButton.Text = "Reset Main Window Position";
+            resetPositionButton.UseVisualStyleBackColor = true;
+            resetPositionButton.Click += resetPositionButton_Click;
+            // 
+            // clearCacheButton
+            // 
+            clearCacheButton.Location = new System.Drawing.Point(7, 22);
+            clearCacheButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            clearCacheButton.Name = "clearCacheButton";
+            clearCacheButton.Size = new System.Drawing.Size(126, 27);
+            clearCacheButton.TabIndex = 0;
+            clearCacheButton.Text = "Clear Cache";
+            clearCacheButton.UseVisualStyleBackColor = true;
+            clearCacheButton.Click += clearCacheButton_Click;
+            // 
+            // refreshListButton
+            // 
+            refreshListButton.Location = new System.Drawing.Point(140, 22);
+            refreshListButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            refreshListButton.Name = "refreshListButton";
+            refreshListButton.Size = new System.Drawing.Size(105, 27);
+            refreshListButton.TabIndex = 1;
+            refreshListButton.Text = "Refresh List";
+            refreshListButton.UseVisualStyleBackColor = true;
+            refreshListButton.Click += refreshListButton_Click;
+            // 
+            // preferencesOk
+            // 
+            preferencesOk.Location = new System.Drawing.Point(200, 388);
+            preferencesOk.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            preferencesOk.Name = "preferencesOk";
+            preferencesOk.Size = new System.Drawing.Size(88, 27);
+            preferencesOk.TabIndex = 1;
+            preferencesOk.Text = "OK";
+            preferencesOk.UseVisualStyleBackColor = true;
+            preferencesOk.Click += preferencesOk_Click;
+            // 
+            // preferencesCancel
+            // 
+            preferencesCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            preferencesCancel.Location = new System.Drawing.Point(294, 388);
+            preferencesCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            preferencesCancel.Name = "preferencesCancel";
+            preferencesCancel.Size = new System.Drawing.Size(88, 27);
+            preferencesCancel.TabIndex = 2;
+            preferencesCancel.Text = "Cancel";
+            preferencesCancel.UseVisualStyleBackColor = true;
+            preferencesCancel.Click += preferencesCancel_Click;
+            // 
+            // preferencesApply
+            // 
+            preferencesApply.Enabled = false;
+            preferencesApply.Location = new System.Drawing.Point(388, 388);
+            preferencesApply.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            preferencesApply.Name = "preferencesApply";
+            preferencesApply.Size = new System.Drawing.Size(88, 27);
+            preferencesApply.TabIndex = 3;
+            preferencesApply.Text = "Apply";
+            preferencesApply.UseVisualStyleBackColor = true;
+            preferencesApply.Click += preferencesApply_Click;
+            // 
+            // PreferencesForm
+            // 
+            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            CancelButton = preferencesCancel;
+            ClientSize = new System.Drawing.Size(490, 421);
+            ControlBox = false;
+            Controls.Add(preferencesApply);
+            Controls.Add(preferencesCancel);
+            Controls.Add(preferencesOk);
+            Controls.Add(preferencesTabControl);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "PreferencesForm";
+            ShowInTaskbar = false;
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "PreferencesForm";
+            FormClosing += PreferencesForm_FormClosing;
+            FormClosed += PreferencesForm_FormClosed;
+            Load += PreferencesForm_Load;
+            preferencesTabControl.ResumeLayout(false);
+            generalPreferencesTab.ResumeLayout(false);
+            hotkeySettingsBox.ResumeLayout(false);
+            uiSettingsBox.ResumeLayout(false);
+            uiSettingsBox.PerformLayout();
+            advancedPreferencesTab.ResumeLayout(false);
+            cacheRefreshGroup.ResumeLayout(false);
+            ResumeLayout(false);
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.TabControl preferencesTabControl;
+        private System.Windows.Forms.TabControl preferencesTabControl;
 		private System.Windows.Forms.TabPage generalPreferencesTab;
 		private System.Windows.Forms.TabPage advancedPreferencesTab;
 		private System.Windows.Forms.Button preferencesOk;

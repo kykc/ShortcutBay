@@ -1,4 +1,4 @@
-﻿namespace ShortcutBay
+namespace ShortcutBay
 {
 	partial class HelpForm
 	{
@@ -20,191 +20,205 @@
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HelpForm));
-			this.closeButton = new System.Windows.Forms.Button();
-			this.tabControl2 = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-			this.logoPictureBox = new System.Windows.Forms.PictureBox();
-			this.copyrightLabel = new System.Windows.Forms.Label();
-			this.versionLabel = new System.Windows.Forms.Label();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.advancedTipsBox = new System.Windows.Forms.GroupBox();
-			this.basicTipsGroup = new System.Windows.Forms.GroupBox();
-			this.tipsTextBox = new System.Windows.Forms.TextBox();
-			this.tabControl2.SuspendLayout();
-			this.tabPage1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
-			this.tabPage2.SuspendLayout();
-			this.basicTipsGroup.SuspendLayout();
-			this.SuspendLayout();
-			// 
-			// closeButton
-			// 
-			this.closeButton.Location = new System.Drawing.Point(184, 302);
-			this.closeButton.Name = "closeButton";
-			this.closeButton.Size = new System.Drawing.Size(75, 23);
-			this.closeButton.TabIndex = 1;
-			this.closeButton.Text = "Close";
-			this.closeButton.UseVisualStyleBackColor = true;
-			this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-			// 
-			// tabControl2
-			// 
-			this.tabControl2.Controls.Add(this.tabPage1);
-			this.tabControl2.Controls.Add(this.tabPage2);
-			this.tabControl2.Location = new System.Drawing.Point(5, 5);
-			this.tabControl2.Name = "tabControl2";
-			this.tabControl2.SelectedIndex = 0;
-			this.tabControl2.Size = new System.Drawing.Size(438, 291);
-			this.tabControl2.TabIndex = 0;
-			// 
-			// tabPage1
-			// 
-			this.tabPage1.Controls.Add(this.richTextBox1);
-			this.tabPage1.Controls.Add(this.linkLabel1);
-			this.tabPage1.Controls.Add(this.logoPictureBox);
-			this.tabPage1.Controls.Add(this.copyrightLabel);
-			this.tabPage1.Controls.Add(this.versionLabel);
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(430, 265);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "About";
-			this.tabPage1.UseVisualStyleBackColor = true;
-			// 
-			// richTextBox1
-			// 
-			this.richTextBox1.Location = new System.Drawing.Point(9, 108);
-			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.ReadOnly = true;
-			this.richTextBox1.Size = new System.Drawing.Size(415, 151);
-			this.richTextBox1.TabIndex = 6;
-			this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
-			// 
-			// linkLabel1
-			// 
-			this.linkLabel1.AutoSize = true;
-			this.linkLabel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.linkLabel1.Location = new System.Drawing.Point(6, 92);
-			this.linkLabel1.Name = "linkLabel1";
-			this.linkLabel1.Size = new System.Drawing.Size(387, 13);
-			this.linkLabel1.TabIndex = 4;
-			this.linkLabel1.TabStop = true;
-			this.linkLabel1.Text = "ShortcutBay is a FREE program licensed under a Creative Commons 3.0 License";
-			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-			// 
-			// logoPictureBox
-			// 
-			this.logoPictureBox.Image = global::ShortcutBay.ImageCollection.LargeLogo;
-			this.logoPictureBox.Location = new System.Drawing.Point(360, 6);
-			this.logoPictureBox.Name = "logoPictureBox";
-			this.logoPictureBox.Size = new System.Drawing.Size(64, 64);
-			this.logoPictureBox.TabIndex = 3;
-			this.logoPictureBox.TabStop = false;
-			// 
-			// copyrightLabel
-			// 
-			this.copyrightLabel.AutoSize = true;
-			this.copyrightLabel.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.copyrightLabel.Location = new System.Drawing.Point(6, 31);
-			this.copyrightLabel.Name = "copyrightLabel";
-			this.copyrightLabel.Size = new System.Drawing.Size(116, 26);
-			this.copyrightLabel.TabIndex = 2;
-			this.copyrightLabel.Text = "©2010 Aleksandr Kykc\r\nAll Rights Reserved.";
-			// 
-			// versionLabel
-			// 
-			this.versionLabel.AutoSize = true;
-			this.versionLabel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.versionLabel.Location = new System.Drawing.Point(3, 6);
-			this.versionLabel.Name = "versionLabel";
-			this.versionLabel.Size = new System.Drawing.Size(159, 16);
-			this.versionLabel.TabIndex = 1;
-			this.versionLabel.Text = "ShortcutBay version blabla";
-			// 
-			// tabPage2
-			// 
-			this.tabPage2.Controls.Add(this.advancedTipsBox);
-			this.tabPage2.Controls.Add(this.basicTipsGroup);
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(430, 265);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "Tips";
-			this.tabPage2.UseVisualStyleBackColor = true;
-			// 
-			// advancedTipsBox
-			// 
-			this.advancedTipsBox.Location = new System.Drawing.Point(6, 113);
-			this.advancedTipsBox.Name = "advancedTipsBox";
-			this.advancedTipsBox.Size = new System.Drawing.Size(418, 146);
-			this.advancedTipsBox.TabIndex = 2;
-			this.advancedTipsBox.TabStop = false;
-			this.advancedTipsBox.Text = "Advanced";
-			// 
-			// basicTipsGroup
-			// 
-			this.basicTipsGroup.Controls.Add(this.tipsTextBox);
-			this.basicTipsGroup.Location = new System.Drawing.Point(6, 6);
-			this.basicTipsGroup.Name = "basicTipsGroup";
-			this.basicTipsGroup.Size = new System.Drawing.Size(419, 107);
-			this.basicTipsGroup.TabIndex = 1;
-			this.basicTipsGroup.TabStop = false;
-			this.basicTipsGroup.Text = "Basic";
-			// 
-			// tipsTextBox
-			// 
-			this.tipsTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tipsTextBox.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.tipsTextBox.Location = new System.Drawing.Point(6, 19);
-			this.tipsTextBox.Multiline = true;
-			this.tipsTextBox.Name = "tipsTextBox";
-			this.tipsTextBox.ReadOnly = true;
-			this.tipsTextBox.Size = new System.Drawing.Size(407, 82);
-			this.tipsTextBox.TabIndex = 0;
-			// 
-			// HelpForm
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(446, 330);
-			this.Controls.Add(this.closeButton);
-			this.Controls.Add(this.tabControl2);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
-			this.Name = "HelpForm";
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "Help";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HelpForm_FormClosing);
-			this.Load += new System.EventHandler(this.HelpForm_Load);
-			this.tabControl2.ResumeLayout(false);
-			this.tabPage1.ResumeLayout(false);
-			this.tabPage1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
-			this.tabPage2.ResumeLayout(false);
-			this.basicTipsGroup.ResumeLayout(false);
-			this.basicTipsGroup.PerformLayout();
-			this.ResumeLayout(false);
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HelpForm));
+            closeButton = new System.Windows.Forms.Button();
+            tabControl2 = new System.Windows.Forms.TabControl();
+            tabPage1 = new System.Windows.Forms.TabPage();
+            richTextBox1 = new System.Windows.Forms.RichTextBox();
+            linkLabel1 = new System.Windows.Forms.LinkLabel();
+            logoPictureBox = new System.Windows.Forms.PictureBox();
+            copyrightLabel = new System.Windows.Forms.Label();
+            versionLabel = new System.Windows.Forms.Label();
+            tabPage2 = new System.Windows.Forms.TabPage();
+            advancedTipsBox = new System.Windows.Forms.GroupBox();
+            basicTipsGroup = new System.Windows.Forms.GroupBox();
+            tipsTextBox = new System.Windows.Forms.TextBox();
+            tabControl2.SuspendLayout();
+            tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)logoPictureBox).BeginInit();
+            tabPage2.SuspendLayout();
+            basicTipsGroup.SuspendLayout();
+            SuspendLayout();
+            // 
+            // closeButton
+            // 
+            closeButton.Location = new System.Drawing.Point(215, 348);
+            closeButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            closeButton.Name = "closeButton";
+            closeButton.Size = new System.Drawing.Size(88, 27);
+            closeButton.TabIndex = 1;
+            closeButton.Text = "Close";
+            closeButton.UseVisualStyleBackColor = true;
+            closeButton.Click += closeButton_Click;
+            // 
+            // tabControl2
+            // 
+            tabControl2.Controls.Add(tabPage1);
+            tabControl2.Controls.Add(tabPage2);
+            tabControl2.Location = new System.Drawing.Point(6, 6);
+            tabControl2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabControl2.Name = "tabControl2";
+            tabControl2.SelectedIndex = 0;
+            tabControl2.Size = new System.Drawing.Size(511, 336);
+            tabControl2.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(richTextBox1);
+            tabPage1.Controls.Add(linkLabel1);
+            tabPage1.Controls.Add(logoPictureBox);
+            tabPage1.Controls.Add(copyrightLabel);
+            tabPage1.Controls.Add(versionLabel);
+            tabPage1.Location = new System.Drawing.Point(4, 24);
+            tabPage1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabPage1.Size = new System.Drawing.Size(503, 308);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "About";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Location = new System.Drawing.Point(10, 125);
+            richTextBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
+            richTextBox1.Size = new System.Drawing.Size(483, 174);
+            richTextBox1.TabIndex = 6;
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 204);
+            linkLabel1.Location = new System.Drawing.Point(7, 106);
+            linkLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new System.Drawing.Size(387, 13);
+            linkLabel1.TabIndex = 4;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "ShortcutBay is a FREE program licensed under a Creative Commons 3.0 License";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
+            // 
+            // logoPictureBox
+            // 
+            logoPictureBox.Image = ImageCollection.LargeLogo;
+            logoPictureBox.Location = new System.Drawing.Point(420, 7);
+            logoPictureBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            logoPictureBox.Name = "logoPictureBox";
+            logoPictureBox.Size = new System.Drawing.Size(75, 74);
+            logoPictureBox.TabIndex = 3;
+            logoPictureBox.TabStop = false;
+            // 
+            // copyrightLabel
+            // 
+            copyrightLabel.AutoSize = true;
+            copyrightLabel.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 204);
+            copyrightLabel.Location = new System.Drawing.Point(7, 36);
+            copyrightLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            copyrightLabel.Name = "copyrightLabel";
+            copyrightLabel.Size = new System.Drawing.Size(116, 26);
+            copyrightLabel.TabIndex = 2;
+            copyrightLabel.Text = "©2010 Aleksandr Kykc\r\nAll Rights Reserved.";
+            // 
+            // versionLabel
+            // 
+            versionLabel.AutoSize = true;
+            versionLabel.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 204);
+            versionLabel.Location = new System.Drawing.Point(4, 7);
+            versionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            versionLabel.Name = "versionLabel";
+            versionLabel.Size = new System.Drawing.Size(158, 16);
+            versionLabel.TabIndex = 1;
+            versionLabel.Text = "ShortcutBay version blabla";
+            // 
+            // tabPage2
+            // 
+            tabPage2.Controls.Add(advancedTipsBox);
+            tabPage2.Controls.Add(basicTipsGroup);
+            tabPage2.Location = new System.Drawing.Point(4, 24);
+            tabPage2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tabPage2.Size = new System.Drawing.Size(503, 308);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "Tips";
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // advancedTipsBox
+            // 
+            advancedTipsBox.Location = new System.Drawing.Point(7, 130);
+            advancedTipsBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            advancedTipsBox.Name = "advancedTipsBox";
+            advancedTipsBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            advancedTipsBox.Size = new System.Drawing.Size(488, 168);
+            advancedTipsBox.TabIndex = 2;
+            advancedTipsBox.TabStop = false;
+            advancedTipsBox.Text = "Advanced";
+            // 
+            // basicTipsGroup
+            // 
+            basicTipsGroup.Controls.Add(tipsTextBox);
+            basicTipsGroup.Location = new System.Drawing.Point(7, 7);
+            basicTipsGroup.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            basicTipsGroup.Name = "basicTipsGroup";
+            basicTipsGroup.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            basicTipsGroup.Size = new System.Drawing.Size(489, 123);
+            basicTipsGroup.TabIndex = 1;
+            basicTipsGroup.TabStop = false;
+            basicTipsGroup.Text = "Basic";
+            // 
+            // tipsTextBox
+            // 
+            tipsTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            tipsTextBox.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 204);
+            tipsTextBox.Location = new System.Drawing.Point(7, 22);
+            tipsTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tipsTextBox.Multiline = true;
+            tipsTextBox.Name = "tipsTextBox";
+            tipsTextBox.ReadOnly = true;
+            tipsTextBox.Size = new System.Drawing.Size(475, 95);
+            tipsTextBox.TabIndex = 0;
+            // 
+            // HelpForm
+            // 
+            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            ClientSize = new System.Drawing.Size(520, 381);
+            Controls.Add(closeButton);
+            Controls.Add(tabControl2);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "HelpForm";
+            ShowInTaskbar = false;
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "Help";
+            FormClosing += HelpForm_FormClosing;
+            Load += HelpForm_Load;
+            tabControl2.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();
+            tabPage2.ResumeLayout(false);
+            basicTipsGroup.ResumeLayout(false);
+            basicTipsGroup.PerformLayout();
+            ResumeLayout(false);
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.Button closeButton;
 		private System.Windows.Forms.TabControl tabControl2;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TabPage tabPage2;

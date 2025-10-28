@@ -4,30 +4,30 @@ using System.Text;
 using System.Collections;
 using System.Windows.Forms;
 
-namespace MainKykc
+namespace ShortcutBay
 {
-	public enum SortDirection
-	{
-		Asc,
-		Desc
-	}
+    public enum SortDirection
+    {
+        Asc,
+        Desc
+    }
 
-	public class ListViewItemComparer : IComparer
-	{
-		private SortDirection m_direction = SortDirection.Asc;
+    public class ListViewItemComparer : IComparer
+    {
+        private SortDirection m_direction = SortDirection.Asc;
 
-		public ListViewItemComparer() : base() { }
+        public ListViewItemComparer() : base() { }
 
-		public ListViewItemComparer(SortDirection direction)
-		{
-			this.m_direction = direction;
-		}
+        public ListViewItemComparer(SortDirection direction)
+        {
+            this.m_direction = direction;
+        }
 
-		int IComparer.Compare(object x, object y)
-		{
-			ListViewItem xx = (ListViewItem)x;
-			ListViewItem yy = (ListViewItem)y;
-			return xx.Name.CompareTo(yy.Name);
-		}
-	}
+        int IComparer.Compare(object? x, object? y)
+        {
+            ListViewItem? xx = x as ListViewItem;
+            ListViewItem? yy = y as ListViewItem;
+            return xx?.Name?.CompareTo(yy?.Name) ?? 0;
+        }
+    }
 }
