@@ -10,6 +10,7 @@ namespace ShortcutBay
 	{
 		public static MainForm MainForm { get; private set; } = null!;
 		public static Settings Settings { get; private set; } = new();
+		public static bool Net9DarkColorModeEnabled { get; private set; } = false;
 
 		public static string GetTipsText()
 		{
@@ -30,7 +31,13 @@ namespace ShortcutBay
 			Application.EnableVisualStyles();
 			Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.SetColorMode(SystemColorMode.Dark);
+#if NET9_0_OR_GREATER
+			if (Application.SystemColorMode == SystemColorMode.Dark)
+			{
+				Application.SetColorMode(SystemColorMode.Dark);
+				Net9DarkColorModeEnabled = true;
+			}
+#endif
 			Application.ApplicationExit += new EventHandler(onExit);
 			MainForm = new MainForm();
 			Application.Run(MainForm);

@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ShortcutBay
@@ -18,11 +18,21 @@ namespace ShortcutBay
 
         public void Save()
         {
-            using var fileStream = new FileStream(Path.Join("settings.json"), FileMode.OpenOrCreate, FileAccess.Write);
-            string settingsJson = JsonSerializer.Serialize<Settings>(this, SettingsJsonGenerationContext.Default.Settings);
-            StreamWriter streamWriter = new StreamWriter(fileStream);
-            streamWriter.Write(settingsJson);
-            streamWriter.Flush();
+            var exeDir = Path.GetDirectoryName(System.Environment.ProcessPath);
+
+            if (exeDir != null)
+            {
+                using var fileStream = new FileStream(Path.Join(exeDir, "settings.json"), FileMode.OpenOrCreate, FileAccess.Write);
+                string settingsJson = JsonSerializer.Serialize<Settings>(this, SettingsJsonGenerationContext.Default.Settings);
+                StreamWriter streamWriter = new StreamWriter(fileStream);
+                streamWriter.Write(settingsJson);
+                streamWriter.Flush();
+            }
+            else
+            {
+                Util.writeDebugInfo("ERROR: failed to save config file");
+                MessageBox.Show("Failed to save config file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public static Settings? Load()
@@ -31,7 +41,7 @@ namespace ShortcutBay
 
             if (exeDir != null)
             {
-                using var fileStream = new FileStream(Path.Join("settings.json"), FileMode.OpenOrCreate, FileAccess.Read);
+                using var fileStream = new FileStream(Path.Join(exeDir, "settings.json"), FileMode.OpenOrCreate, FileAccess.Read);
 
                 using var streamReader = new StreamReader(fileStream);
                 var json = streamReader.ReadToEnd();
@@ -42,8 +52,16 @@ namespace ShortcutBay
                 }
                 catch (Exception e)
                 {
-                    // TODO: log exception
+                    string msg = $"{e.GetType().ToString()} with message {e.Message} when deserializing config";
+
+                    Util.writeDebugInfo($"ERROR: {msg}");
+                    MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            else
+            {
+                Util.writeDebugInfo("ERROR: failed to load config file");
+                MessageBox.Show("Failed to load config file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return null;

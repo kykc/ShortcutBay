@@ -192,7 +192,6 @@ namespace ShortcutBay
 		public static void writeDebugInfo(string str)
 		{
 			//MessageBox.Show(str);
-			;
 		}
 
 		public static bool isShellLink(string path)
