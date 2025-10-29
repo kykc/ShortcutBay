@@ -217,5 +217,18 @@ namespace ShortcutBay
             item.Click += handler;
             return item;
         }
+
+        public static bool isSubdirectory(string? path, string? parent)
+        {
+            if (path != null && parent != null)
+            {
+                var fullPath = Path.GetFullPath(path);
+                var fullParent = Path.GetFullPath(parent);
+
+                return fullPath.StartsWith(fullParent, StringComparison.OrdinalIgnoreCase);
+            }
+
+            return false;
+        }
     }
 }

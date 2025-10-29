@@ -111,6 +111,7 @@ namespace ShortcutBay
 
             Util.getMainForm()!.initForm();
             this.PreferencesChanged = false;
+            Program.Settings.Save();
         }
 
         private void alwaysOnTop_CheckedChanged(object sender, EventArgs e)

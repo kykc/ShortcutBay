@@ -1,0 +1,20 @@
+name: build choco package
+run-name: ${{ gitea.actor }} is building shortcutbay
+on: [push]
+
+jobs:
+  build-choco:
+    runs-on: automatl-net9-ubuntu2404
+    if: gitea.ref == 'refs/heads/master'
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: build with dotnet
+        run: |
+          pushd ShortcutBay && dotnet publish -c Release -r win-x64 -f net9.0-windows --self-contained -t:PackChoco -p:PublishSingleFile=true && popd
+      - name: rename nupkg
+        run: |
+          mv ShortcutBay/ShortcutBay.portable*.nupkg shortcutbay.portable.nupkg
+      - name: upload nupkg to choco repo
+        run: |
+          choco push shortcutbay.portable.nupkg --source https://${{ secrets.CI_USER }}:${{ secrets.CI_TOKEN }}@${{ vars.AU_GITEA_HOST }}/api/packages/audist/nuget/index.json --api-key ${{ secrets.CI_TOKEN }}
