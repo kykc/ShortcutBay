@@ -26,30 +26,30 @@ namespace ShortcutBay
         public PreferencesForm()
         {
             InitializeComponent();
-            Util.properShow(Program.MainForm);
+            Util.ProperShow(Program.MainForm);
         }
 
         private void preferencesOk_Click(object sender, EventArgs e)
         {
-            this.fromForm();
+            this.FromForm();
             this.Close();
         }
 
         private void PreferencesForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Program.MainForm.unlockForm();
+            Program.MainForm.IsLocked = false;
         }
 
         private void clearCacheButton_Click(object sender, EventArgs e)
         {
             this.PreferencesChanged = true;
-            ShellLinkFactory.ClearFileCache();
-            Program.MainForm.initForm();
+            ShellLinkIconCache.ClearCache();
+            Program.MainForm.Init();
         }
 
         private void preferencesApply_Click(object sender, EventArgs e)
         {
-            this.fromForm();
+            this.FromForm();
         }
 
         private void preferencesCancel_Click(object sender, EventArgs e)
@@ -59,7 +59,7 @@ namespace ShortcutBay
 
         private void refreshListButton_Click(object sender, EventArgs e)
         {
-            Program.MainForm.initForm();
+            Program.MainForm.Init();
             this.PreferencesChanged = true;
         }
 
@@ -79,10 +79,10 @@ namespace ShortcutBay
         {
             this.shortcutKeySelect.DataSource = Enum.GetValues(typeof(Shortcut));
             Net9DarkModeStylingHacks.ApplyTabColor(this.preferencesTabControl);
-            this.toForm();
+            this.ToForm();
         }
 
-        private void toForm()
+        private void ToForm()
         {
             Enum.TryParse(Program.Settings.ShortcutKey, out Shortcut shortcut);
             this.alwaysOnTop.Checked = Program.Settings.AlwaysOnTop;
@@ -93,7 +93,7 @@ namespace ShortcutBay
             this.PreferencesChanged = false;
         }
 
-        private void fromForm()
+        private void FromForm()
         {
             Program.Settings.AlwaysOnTop = this.alwaysOnTop.Checked;
             Program.Settings.HideOnLostFocus = this.hideOnLostFocus.Checked;
@@ -111,7 +111,7 @@ namespace ShortcutBay
                 Program.Settings.ShortcutKey = nameof(Shortcut.CtrlQ);
             }
 
-            Program.MainForm!.initForm();
+            Program.MainForm!.Init();
             this.PreferencesChanged = false;
             Program.Settings.Save();
         }

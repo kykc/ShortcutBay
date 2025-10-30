@@ -14,7 +14,7 @@ namespace ShortcutBay
 {
     class Util
     {
-        public static string md5(string Value)
+        public static string CalcMd5(string Value)
         {
 #pragma warning disable SYSLIB0021
             var x = new System.Security.Cryptography.MD5CryptoServiceProvider();
@@ -29,29 +29,7 @@ namespace ShortcutBay
             return ret;
         }
 
-        public static string encodeIcon(Icon icon)
-        {
-            return Util.encodeIcon(icon.ToBitmap());
-        }
-
-        public static string encodeIcon(Image icon)
-        {
-            using MemoryStream ms = new MemoryStream();
-
-            icon.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-            return System.Convert.ToBase64String(ms.ToArray());
-        }
-
-        public static Image? decodeIcon(string iconString)
-        {
-            byte[] cachedIconByteArr = Convert.FromBase64String(iconString);
-
-            MemoryStream ms = new MemoryStream(cachedIconByteArr);
-
-            return Image.FromStream(ms).Clone() as Image;
-        }
-
-        public static void toggleVisibility(MainForm form)
+        public static void ToggleVisibility(MainForm form)
         {
             if (form.Opacity > 0)
             {
@@ -59,16 +37,16 @@ namespace ShortcutBay
                 {
                     PositionCalculator.StorePosition(form.Location.X, form.Location.Y);
                 }
-                Util.properHide(form);
+                Util.ProperHide(form);
             }
             else
             {
                 form.WasShown = true;
-                Util.properShow(form);
+                Util.ProperShow(form);
             }
         }
 
-        public static void properShow(Form form)
+        public static void ProperShow(Form form)
         {
             form.WindowState = FormWindowState.Normal;
             form.Show();
@@ -79,7 +57,7 @@ namespace ShortcutBay
             form.Opacity = 0.99;
         }
 
-        public static void properHide(Form form)
+        public static void ProperHide(Form form)
         {
             form.Visible = false;
             form.WindowState = FormWindowState.Minimized;
@@ -87,7 +65,7 @@ namespace ShortcutBay
             form.Opacity = 0;
         }
 
-        public static bool execute(string path, bool asAdmin = false)
+        public static bool ExecuteProcess(string path, bool asAdmin = false)
         {
             Process myProcess = new Process();
             ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(path);
@@ -111,7 +89,7 @@ namespace ShortcutBay
             }
         }
 
-        public static void deleteListItem(string path)
+        public static void DeleteListItem(string path)
         {
             try
             {
@@ -124,34 +102,17 @@ namespace ShortcutBay
                 MessageBox.Show(e.Message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            Program.MainForm.initForm();
+            Program.MainForm.Init();
         }
 
-        public static void renameListItem(string from, string to)
-        {
-            try
-            {
-                from = Path.GetFullPath(from);
-                to = Path.GetFullPath(to);
-                File.Move(from, to);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                MessageBox.Show(e.Message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-
-            Program.MainForm.initForm();
-        }
-
-        public static bool isInFullScreenMode()
+        public static bool IsInFullScreenMode()
         {
             return DetectFullScreen.CheckForegroundWindowIsFullscreen();
         }
 
-        public static void addListItem(string file)
+        public static void AddListItem(string file)
         {
-            if (Util.isShellLink(file))
+            if (Util.IsShellLink(file))
             {
                 string path = Path.GetFullPath(Program.Settings.DbPath) +
                     Path.DirectorySeparatorChar +
@@ -175,9 +136,8 @@ namespace ShortcutBay
 
         }
 
-        public static bool isShellLink(string path)
+        public static bool IsShellLink(string path)
         {
-
             try
             {
                 var link = ShellLinkFactory.Create(path);
@@ -191,7 +151,7 @@ namespace ShortcutBay
             return true;
         }
 
-        public static ToolStripMenuItem createToolStripMenuItem(string text, EventHandler handler)
+        public static ToolStripMenuItem CreateToolStripMenuItem(string text, EventHandler handler)
         {
             ToolStripMenuItem item = new ToolStripMenuItem();
             item.Text = text;
@@ -199,7 +159,7 @@ namespace ShortcutBay
             return item;
         }
 
-        public static bool isSubdirectory(string? path, string? parent)
+        public static bool IsSubdirectory(string? path, string? parent)
         {
             if (path != null && parent != null)
             {

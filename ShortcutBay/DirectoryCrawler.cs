@@ -19,14 +19,11 @@ namespace ShortcutBay
 
             List<ShellLink> retVal = new();
 
-            // TODO: configurable
-            var banwords = new List<string> { "manual", "readme", "uninstall", "documentation", "donate", "help", "удалить"};
-
             var banwordFilter = (ShellLink link) =>
             {
                 var words = link.GetCaption().Split(' ').Select(x => x.ToLower());
 
-                if (words.Intersect(banwords).Any())
+                if (words.Intersect(Program.Settings.IgnoreWords).Any())
                 {
                     return false;
                 }
@@ -56,7 +53,7 @@ namespace ShortcutBay
                 retVal = retVal.GroupBy(x => x.GetCaption()).Select(x => x.First()).ToList();
             }
 
-            ShellLinkFactory.UpdateAndStoreFileCache(retVal);
+            ShellLinkIconCache.PreloadIcons(retVal);
 
             return retVal;
         }

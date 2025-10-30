@@ -51,7 +51,6 @@ namespace ShortcutBay
             shellLinkListView.TabIndex = 0;
             shellLinkListView.UseCompatibleStateImageBehavior = false;
             shellLinkListView.View = System.Windows.Forms.View.Details;
-            shellLinkListView.SelectedIndexChanged += shellLinkListView_SelectedIndexChanged;
             shellLinkListView.DragDrop += shellLinkListView_DragDrop;
             shellLinkListView.DragEnter += shellLinkListView_DragEnter;
             shellLinkListView.KeyDown += shellLinkListView_KeyDown;

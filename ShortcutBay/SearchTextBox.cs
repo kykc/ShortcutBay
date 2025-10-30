@@ -18,7 +18,7 @@ namespace ShortcutBay
             this.isEmpty = true;
             this.OnLeave(new EventArgs());
             Net9DarkModeStylingHacks.ApplyColorsToSearchBox(this);
-            this.clearText();
+            this.ClearText();
         }
 
         public void appendText(string text)
@@ -78,16 +78,16 @@ namespace ShortcutBay
             e.Graphics.DrawString(Text, Font, drawBrush, 0f, 0f);
         }
 
-        public void clearText()
+        public void ClearText()
         {
             this.appendText("a");
             while (!this.IsEmpty)
             {
-                this.backspaceEmulate();
+                this.BackspaceEmulate();
             }
         }
 
-        public void backspaceEmulate()
+        public void BackspaceEmulate()
         {
             if (this.IsEmpty)
             {

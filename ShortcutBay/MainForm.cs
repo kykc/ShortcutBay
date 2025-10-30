@@ -22,42 +22,18 @@ namespace ShortcutBay
     {
         protected SystemHotkey? globalKeyboardHook;
         protected List<ShellLink>? mainLinkList;
-        protected bool wasShown = false;
         public PreferencesForm? preferencesForm = null;
         public HelpForm? helpForm = null;
-        protected bool locked = false;
-
-        public void lockForm()
-        {
-            this.locked = true;
-        }
-
-        public void unlockForm()
-        {
-            this.locked = false;
-        }
-
-        protected bool isLockedForm()
-        {
-            return this.locked;
-        }
 
         [DefaultValue(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool WasShown
-        {
-            get
-            {
-                return this.wasShown;
-            }
-            set
-            {
-                this.wasShown = true;
-            }
-        }
+        public bool IsLocked { get; set; } = false;
+
+        [DefaultValue(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool WasShown { get; set; } = false;
 
         public MainForm()
         {
-            this.toggleVisibility(this, new System.EventArgs());
+            this.ToggleVisibility(this, EventArgs.Empty);
             InitializeComponent();
             this.Text = Program.Settings.AppName + " " + Program.Settings.Version;
             this.trayIcon.Text = this.Text;
@@ -65,23 +41,23 @@ namespace ShortcutBay
             this.Icon = ImageCollection.MainIcon;
         }
 
-        public ShellLinkListView getListView()
+        public ShellLinkListView GetListView()
         {
             return this.shellLinkListView;
         }
 
-        public void toggleVisibility(object? sender, System.EventArgs e)
+        public void ToggleVisibility(object? sender, System.EventArgs e)
         {
-            if (!this.isLockedForm())
+            if (!this.IsLocked)
             {
-                if (!(Util.isInFullScreenMode() && Program.Settings.ExcludeFullScreen))
+                if (!(Util.IsInFullScreenMode() && Program.Settings.ExcludeFullScreen))
                 {
                     bool wasVisible = this.Visible;
                     //qthis.Size = Program.Settings.MainFormSize;
-                    Util.toggleVisibility(this);
+                    Util.ToggleVisibility(this);
                     if (wasVisible && !this.Visible)
                     {
-                        this.searhBox.clearText();
+                        this.searhBox.ClearText();
                     }
                     this.UpdateZOrder();
                 }
@@ -90,7 +66,7 @@ namespace ShortcutBay
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.initForm();
+            this.Init();
             if (!Program.Settings.WasStartedBefore)
             {
                 this.trayIcon.ShowBalloonTip(30, "Tips", Program.GetTipsText(), new ToolTipIcon());
@@ -99,7 +75,7 @@ namespace ShortcutBay
             }
         }
 
-        public void initForm()
+        public void Init()
         {
             string path = Path.GetFullPath(Program.Settings.DbPath);
             if (!Directory.Exists(path))
@@ -108,15 +84,15 @@ namespace ShortcutBay
             }
 
             this.mainLinkList = DirectoryCrawler.FindShellLinks(path);
-            string q = this.shellLinkListView.getLastFilter();
-            int i = this.shellLinkListView.getLastIndex();
-            this.shellLinkListView.init(this.mainLinkList);
-            this.searhBox.clearText();
+            string q = this.shellLinkListView.LastFilter;
+            int i = this.shellLinkListView.LastIndex;
+            this.shellLinkListView.Init(this.mainLinkList);
+            this.searhBox.ClearText();
             this.searhBox.appendText(q);
-            this.shellLinkListView.selectItemByIndex(i);
+            this.shellLinkListView.SelectItemByIndex(i);
             this.TopMost = Program.Settings.AlwaysOnTop;
             Enum.TryParse(Program.Settings.ShortcutKey, out Shortcut shortcut);
-            this.globalKeyboardHook = new SystemHotkey(this.components, toggleVisibility, shortcut);
+            this.globalKeyboardHook = new SystemHotkey(this.components, ToggleVisibility, shortcut);
         }
 
         private void searhBox_TextChanged(object sender, EventArgs e)
@@ -127,47 +103,47 @@ namespace ShortcutBay
                 filter = "";
             }
 
-            shellLinkListView.fill(filter);
+            shellLinkListView.Fill(filter);
         }
 
         private void shellLinkListView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Back)
             {
-                this.searhBox.backspaceEmulate();
+                this.searhBox.BackspaceEmulate();
                 e.Handled = true;
             }
-            else if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+            else if (e.KeyCode is Keys.Up or Keys.Down)
             {
-                this.shellLinkListView.handleArrows(e.KeyCode);
+                this.shellLinkListView.HandleArrows(e.KeyCode);
                 e.Handled = true;
             }
             else if (e.KeyCode == Keys.Enter)
             {
-                this.shellLinkListView.handleExecute();
+                this.shellLinkListView.HandleExecute();
                 e.Handled = true;
             }
             else if (e.KeyCode == Keys.Delete)
             {
 
-                this.shellLinkListView.handleDelete();
+                this.shellLinkListView.HandleDelete();
                 e.Handled = true;
             }
             else if (e.KeyCode == Keys.F5)
             {
-                this.initForm();
+                this.Init();
                 e.Handled = true;
             }
             else if (e.KeyCode == Keys.Escape)
             {
-                this.toggleVisibility(this, new EventArgs());
+                this.ToggleVisibility(this, EventArgs.Empty);
                 e.Handled = true;
             }
         }
 
         private void shellLinkListView_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar >= 0x21 && e.KeyChar <= 0x7E)
+            if (e.KeyChar >= 0x20 && e.KeyChar <= 0x7E)
             {
                 this.searhBox.appendText(e.KeyChar.ToString());
                 this.searhBox.Select(this.searhBox.Text.Length, 0);
@@ -179,7 +155,7 @@ namespace ShortcutBay
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                this.toggleVisibility(this, new EventArgs());
+                this.ToggleVisibility(this, EventArgs.Empty);
                 e.Cancel = true;
             }
             else
@@ -193,7 +169,7 @@ namespace ShortcutBay
 
         private void trayIcon_DoubleClick(object sender, EventArgs e)
         {
-            this.toggleVisibility(this, EventArgs.Empty);
+            this.ToggleVisibility(this, EventArgs.Empty);
         }
 
         private void shellLinkListView_DragEnter(object sender, DragEventArgs e)
@@ -215,27 +191,22 @@ namespace ShortcutBay
 
             foreach (string file in files)
             {
-                Util.addListItem(file);
-                this.initForm();
+                Util.AddListItem(file);
+                this.Init();
             }
         }
 
         private void shellLinkListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.shellLinkListView.handleExecute();
+            this.shellLinkListView.HandleExecute();
         }
 
         private void MainForm_Deactivate(object sender, EventArgs e)
         {
-            if (Program.Settings.HideOnLostFocus && !this.isLockedForm() && this.WasShown)
+            if (Program.Settings.HideOnLostFocus && !this.IsLocked && this.WasShown)
             {
-                Util.properHide(this);
+                Util.ProperHide(this);
             }
-        }
-
-        private void shellLinkListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

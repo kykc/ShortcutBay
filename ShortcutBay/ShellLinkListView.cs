@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
@@ -11,26 +12,20 @@ namespace ShortcutBay
 {
     public class ShellLinkListView : ListView
     {
-        protected List<ListViewItem> itemList = new();
-        protected string lastFilter = "";
-        protected int lastIndex = 0;
+        private List<ListViewItem> ItemList { get; set; } = new();
 
-        public string getLastFilter()
-        {
-            return lastFilter;
-        }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string LastFilter { get; private set; } = "";
 
-        public int getLastIndex()
-        {
-            return this.lastIndex;
-        }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int LastIndex { get; private set; } = 0;
 
         protected override void OnSelectedIndexChanged(EventArgs e)
         {
             if (this.SelectedIndices.Count > 0)
             {
-                this.lastIndex = this.SelectedIndices[0];
-                this.FocusedItem = this.SelectedItems[0];
+                LastIndex = this.SelectedIndices[0];
+                FocusedItem = this.SelectedItems[0];
             }
             base.OnSelectedIndexChanged(e);
         }
@@ -45,7 +40,7 @@ namespace ShortcutBay
             }
         }
 
-        public void init(List<ShellLink> list)
+        public void Init(List<ShellLink> list)
         {
             ColumnHeader header = new ColumnHeader();
             header.Name = "Name";
@@ -53,7 +48,7 @@ namespace ShortcutBay
             this.HeaderStyle = ColumnHeaderStyle.None;
             this.Columns.Clear();
             this.Columns.Add(header);
-            this.itemList = new();
+            ItemList = new();
 
             ImageList imageList = new ImageList();
             imageList.ColorDepth = ColorDepth.Depth32Bit;
@@ -66,20 +61,20 @@ namespace ShortcutBay
                 listViewItem.ImageIndex = i;
                 listViewItem.Name = item.GetCaption();
                 listViewItem.SubItems.Add(item.FullName);
-                this.itemList.Add(listViewItem);
+                ItemList.Add(listViewItem);
                 i++;
             }
-            itemList = itemList.OrderBy(x => x.Name).ToList();
+            ItemList = ItemList.OrderBy(x => x.Name).ToList();
             this.LargeImageList = this.SmallImageList = imageList;
         }
 
-        public void fill(string filter)
+        public void Fill(string filter)
         {
             //MessageBox.Show(filter);
-            if (filter != this.lastFilter)
+            if (filter != LastFilter)
             {
                 this.Items.Clear();
-                foreach (object item2 in this.itemList)
+                foreach (object item2 in ItemList)
                 {
                     ListViewItem? item = item2 as ListViewItem;
                     if (item?.Name.ToLower().Contains(filter.ToLower()) is true)
@@ -87,16 +82,16 @@ namespace ShortcutBay
                         this.Items.Add(item);
                     }
                 }
-                this.lastFilter = filter;
+                LastFilter = filter;
                 //this.FullRowSelect = true;
                 if (this.Items.Count > 0)
                 {
-                    this.selectItemByIndex(0);
+                    this.SelectItemByIndex(0);
                 }
             }
         }
 
-        public void selectItemByIndex(int index)
+        public void SelectItemByIndex(int index)
         {
             if (this.Items.Count > index && index >= 0)
             {
@@ -106,7 +101,7 @@ namespace ShortcutBay
             }
         }
 
-        public void handleArrows(Keys key)
+        public void HandleArrows(Keys key)
         {
             if (this.SelectedItems.Count > 0)
             {
@@ -124,27 +119,27 @@ namespace ShortcutBay
 
                 if (index >= 0 && index < this.Items.Count)
                 {
-                    this.selectItemByIndex(index);
+                    this.SelectItemByIndex(index);
                 }
             }
             else if (this.Items.Count > 0)
             {
-                this.selectItemByIndex(0);
+                this.SelectItemByIndex(0);
             }
         }
 
-        public void handleExecute(bool asAdmin = false)
+        public void HandleExecute(bool asAdmin = false)
         {
             if (this.SelectedItems.Count > 0)
             {
-                if (Util.execute(this.SelectedItems[0].SubItems[1].Text, asAdmin))
+                if (Util.ExecuteProcess(this.SelectedItems[0].SubItems[1].Text, asAdmin))
                 {
-                    Program.MainForm.toggleVisibility(this, EventArgs.Empty);
+                    Program.MainForm.ToggleVisibility(this, EventArgs.Empty);
                 }
             }
         }
 
-        public void handleDelete()
+        public void HandleDelete()
         {
             DialogResult res = MessageBox.Show("Are you sure?", "Confirm delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -153,14 +148,14 @@ namespace ShortcutBay
                 if (this.SelectedItems.Count > 0)
                 {
                     string path = this.SelectedItems[0].SubItems[1].Text;
-                    Util.deleteListItem(path);
+                    Util.DeleteListItem(path);
                 }
             }
         }
 
-        public void handleOpenFileLocation()
+        public void HandleOpenFileLocation()
         {
-            if (getSelectedItem() is var selectedItem)
+            if (GetSelectedItem() is var selectedItem)
             {
                 string path = this.SelectedItems[0].SubItems[1].Text;
                 var shellLink = ShellLinkFactory.Create(path);
@@ -169,9 +164,9 @@ namespace ShortcutBay
             }
         }
 
-        public void handleOpenLinkLocation()
+        public void HandleOpenLinkLocation()
         {
-            if (getSelectedItem() is var selectedItem)
+            if (GetSelectedItem() is var selectedItem)
             {
                 string path = this.SelectedItems[0].SubItems[1].Text;
                 var shellLink = ShellLinkFactory.Create(path);
@@ -180,7 +175,7 @@ namespace ShortcutBay
             }
         }
 
-        public ListViewItem? getSelectedItem()
+        public ListViewItem? GetSelectedItem()
         {
             ShellLinkListView control = this;
             return control.SelectedItems.Count > 0 ? control.SelectedItems[0] : null;

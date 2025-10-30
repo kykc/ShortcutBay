@@ -22,6 +22,7 @@ namespace ShortcutBay
         public bool HideOnLostFocus { get; set; } = false;
         public string ShortcutKey { get; set; } = "CtrlQ";
         public bool IgnoreDuplicates { get; set; } = false;
+        public string[] IgnoreWords { get; set; } = [ "manual", "readme", "uninstall", "documentation", "donate", "help", "удалить" ];
 
         public void Save()
         {
@@ -65,7 +66,7 @@ namespace ShortcutBay
             var chocoLocation = Environment.GetEnvironmentVariable("ChocolateyInstall");
             var selfLocation = Path.GetDirectoryName(System.Environment.ProcessPath);
 
-            bool isChocoPackage = Util.isSubdirectory(selfLocation, chocoLocation);
+            bool isChocoPackage = Util.IsSubdirectory(selfLocation, chocoLocation);
             bool isPortable = selfLocation != null && File.Exists(Path.Combine(selfLocation, "portable_mode"));
 
             if (isPortable)
