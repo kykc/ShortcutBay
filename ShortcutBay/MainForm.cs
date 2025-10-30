@@ -92,7 +92,8 @@ namespace ShortcutBay
             this.shellLinkListView.SelectItemByIndex(i);
             this.TopMost = Program.Settings.AlwaysOnTop;
             Enum.TryParse(Program.Settings.ShortcutKey, out Shortcut shortcut);
-            this.globalKeyboardHook = new SystemHotkey(this.components, ToggleVisibility, shortcut);
+            globalKeyboardHook?.Dispose();
+            globalKeyboardHook = new SystemHotkey(this.components, ToggleVisibility, shortcut);
         }
 
         private void searhBox_TextChanged(object sender, EventArgs e)
