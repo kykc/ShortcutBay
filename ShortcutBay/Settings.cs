@@ -21,6 +21,7 @@ namespace ShortcutBay
         public bool ExcludeFullScreen { get; set; } = true;
         public bool HideOnLostFocus { get; set; } = false;
         public string ShortcutKey { get; set; } = "CtrlQ";
+        public bool IgnoreDuplicates { get; set; } = false;
 
         public void Save()
         {

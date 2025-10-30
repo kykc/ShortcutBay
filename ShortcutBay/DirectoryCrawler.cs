@@ -51,6 +51,11 @@ namespace ShortcutBay
                 }
             }
 
+            if (Program.Settings.IgnoreDuplicates)
+            {
+                retVal = retVal.GroupBy(x => x.GetCaption()).Select(x => x.First()).ToList();
+            }
+
             ShellLinkFactory.UpdateAndStoreFileCache(retVal);
 
             return retVal;

@@ -89,6 +89,7 @@ namespace ShortcutBay
             this.hideOnLostFocus.Checked = Program.Settings.HideOnLostFocus;
             this.ignoreFullScreen.Checked = Program.Settings.ExcludeFullScreen;
             this.shortcutKeySelect.SelectedItem = shortcut;
+            this.ignoreDuplicates.Checked = Program.Settings.IgnoreDuplicates;
             this.PreferencesChanged = false;
         }
 
@@ -97,6 +98,7 @@ namespace ShortcutBay
             Program.Settings.AlwaysOnTop = this.alwaysOnTop.Checked;
             Program.Settings.HideOnLostFocus = this.hideOnLostFocus.Checked;
             Program.Settings.ExcludeFullScreen = this.ignoreFullScreen.Checked;
+            Program.Settings.IgnoreDuplicates = this.ignoreDuplicates.Checked;
 
             var selectedShortcut = shortcutKeySelect.SelectedValue;
 
@@ -130,6 +132,11 @@ namespace ShortcutBay
         }
 
         private void shortcutKeySelect_SelectedValueChanged(object sender, EventArgs e)
+        {
+            this.PreferencesChanged = true;
+        }
+
+        private void ignoreDuplicates_CheckedChanged(object sender, EventArgs e)
         {
             this.PreferencesChanged = true;
         }
