@@ -6,6 +6,7 @@ using System.Windows.Forms;
 
 namespace ShortcutBay
 {
+    // TODO: add ignore duplicates
     static class Program
     {
         public static MainForm MainForm { get; private set; } = null!;
@@ -38,12 +39,12 @@ namespace ShortcutBay
                 Net9DarkColorModeEnabled = true;
             }
 #endif
-            Application.ApplicationExit += new EventHandler(onExit);
+            Application.ApplicationExit += OnExit;
             MainForm = new MainForm();
             Application.Run(MainForm);
         }
 
-        static void onExit(object? sender, EventArgs e)
+        static void OnExit(object? sender, EventArgs e)
         {
             Program.Settings.Save();
         }

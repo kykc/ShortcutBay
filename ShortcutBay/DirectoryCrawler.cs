@@ -3,63 +3,28 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Collections;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using ShellLink = IWshRuntimeLibrary.IWshShortcut;
 
 namespace ShortcutBay
 {
-    class DirectoryCrawler
+    static class DirectoryCrawler
     {
-        private string path;
-        protected const string FILE_FILTER = "*.lnk";
-        protected List<FileInfo> foundFiles;
-
-        public List<FileInfo> getFoundFiles()
+        public static List<ShellLink> FindShellLinks(string path)
         {
-            return this.foundFiles;
-        }
+            var foundFiles = new DirectoryInfo(path)
+                .GetFiles("*.lnk", SearchOption.AllDirectories).ToList();
 
-        protected void setFoundFiles(List<FileInfo> foundFiles)
-        {
-            this.foundFiles = foundFiles;
-        }
-
-        public string getPath()
-        {
-            return path;
-        }
-
-        private void setPath(string newPath)
-        {
-            this.path = newPath;
-            this.omNomNom();
-        }
-
-        public DirectoryCrawler(string path)
-        {
-            this.setPath(path);
-        }
-
-        protected void omNomNom()
-        {
-            DirectoryInfo di = new DirectoryInfo(this.getPath());
-
-            this.setFoundFiles(di.GetFiles(DirectoryCrawler.FILE_FILTER, SearchOption.AllDirectories).ToList());
-        }
-
-        public ShellLinkList getList()
-        {
-            ShellLinkList retVal = new ShellLinkList();
-            ShellLinkCache cache = new ShellLinkCache(this.getPath());
-
-            List<FileInfo> foundFiles = this.getFoundFiles();
+            List<ShellLink> retVal = new();
 
             // TODO: configurable
-            var banwords = new List<string> { "manual", "readme", "uninstall", "documentation", "donate", "help", "удалить" };
+            var banwords = new List<string> { "manual", "readme", "uninstall", "documentation", "donate", "help", "удалить"};
 
             var banwordFilter = (ShellLink link) =>
             {
-                var words = link.Name.Split(' ').Select(x => x.ToLower());
+                var words = link.GetCaption().Split(' ').Select(x => x.ToLower());
 
                 if (words.Intersect(banwords).Any())
                 {
@@ -73,10 +38,7 @@ namespace ShortcutBay
             {
                 try
                 {
-                    ShellLink item = new ShellLink(file.FullName);
-                    Image cachedIcon = cache.getCachedIcon(item.UniqueHash);
-                    //System.Windows.Forms.MessageBox.Show(cachedIcon.ToString());
-                    item.IconImage = cachedIcon;
+                    ShellLink item = ShellLinkFactory.Create(file.FullName);
 
                     if (banwordFilter(item))
                     {
@@ -85,11 +47,11 @@ namespace ShortcutBay
                 }
                 catch (System.Runtime.InteropServices.COMException e)
                 {
-                    Util.writeDebugInfo(e.Message);
+                    Debug.WriteLine(e.Message);
                 }
             }
 
-            cache.storeCache(retVal.getCache().OuterXml);
+            ShellLinkFactory.UpdateAndStoreFileCache(retVal);
 
             return retVal;
         }

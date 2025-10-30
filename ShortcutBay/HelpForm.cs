@@ -23,8 +23,8 @@ namespace ShortcutBay
 
         private void HelpForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Util.getMainForm().helpForm = null;
-            Util.getMainForm().unlockForm();
+            Program.MainForm.helpForm = null;
+            Program.MainForm.unlockForm();
         }
 
         private void titleLabel_Click(object sender, EventArgs e)

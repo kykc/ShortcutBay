@@ -117,7 +117,6 @@ namespace ShortcutBay
 		private System.Windows.Forms.NotifyIcon trayIcon;
 		private TrayMenu trayMenu;
 		private ListViewItemMenu listViewItemMenu;
-        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

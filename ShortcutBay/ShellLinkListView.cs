@@ -1,30 +1,23 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
+using ShellLink = IWshRuntimeLibrary.IWshShortcut;
 
 namespace ShortcutBay
 {
     public class ShellLinkListView : ListView
     {
-        protected ArrayList itemList;
-        protected string lastFilter;
+        protected List<ListViewItem> itemList = new();
+        protected string lastFilter = "";
         protected int lastIndex = 0;
 
         public string getLastFilter()
         {
-            if (this.lastFilter == null)
-            {
-                return "";
-            }
-            else
-            {
-                return this.lastFilter;
-            }
+            return lastFilter;
         }
 
         public int getLastIndex()
@@ -52,7 +45,7 @@ namespace ShortcutBay
             }
         }
 
-        public void init(ShellLinkList list)
+        public void init(List<ShellLink> list)
         {
             ColumnHeader header = new ColumnHeader();
             header.Name = "Name";
@@ -60,24 +53,23 @@ namespace ShortcutBay
             this.HeaderStyle = ColumnHeaderStyle.None;
             this.Columns.Clear();
             this.Columns.Add(header);
-            this.itemList = new ArrayList();
+            this.itemList = new();
 
             ImageList imageList = new ImageList();
             imageList.ColorDepth = ColorDepth.Depth32Bit;
             imageList.ImageSize = new Size(32, 32);
             int i = 0;
-            foreach (string key in list.Keys)
+            foreach (var item in list)
             {
-                ShellLink item = list[key] as ShellLink;
-                imageList.Images.Add(item.IconImage);
-                ListViewItem listViewItem = new ListViewItem(item.Name);
+                imageList.Images.Add(item.GetIcon());
+                ListViewItem listViewItem = new ListViewItem(item.GetCaption());
                 listViewItem.ImageIndex = i;
-                listViewItem.Name = item.Name;
+                listViewItem.Name = item.GetCaption();
                 listViewItem.SubItems.Add(item.FullName);
                 this.itemList.Add(listViewItem);
                 i++;
             }
-            this.itemList.Sort(new ListViewItemComparer());
+            itemList = itemList.OrderBy(x => x.Name).ToList();
             this.LargeImageList = this.SmallImageList = imageList;
         }
 
@@ -89,8 +81,8 @@ namespace ShortcutBay
                 this.Items.Clear();
                 foreach (object item2 in this.itemList)
                 {
-                    ListViewItem item = item2 as ListViewItem;
-                    if (item.Name.ToLower().Contains(filter.ToLower()))
+                    ListViewItem? item = item2 as ListViewItem;
+                    if (item?.Name.ToLower().Contains(filter.ToLower()) is true)
                     {
                         this.Items.Add(item);
                     }
@@ -147,8 +139,7 @@ namespace ShortcutBay
             {
                 if (Util.execute(this.SelectedItems[0].SubItems[1].Text, asAdmin))
                 {
-                    MainForm form = this.FindForm() as MainForm;
-                    form.toggleVisibility(this, new EventArgs());
+                    Program.MainForm.toggleVisibility(this, EventArgs.Empty);
                 }
             }
         }
@@ -172,11 +163,20 @@ namespace ShortcutBay
             if (getSelectedItem() is var selectedItem)
             {
                 string path = this.SelectedItems[0].SubItems[1].Text;
-                var shellLink = new ShellLink(path);
-
-                var dirName = Path.GetDirectoryName(shellLink.TargetPath);
+                var shellLink = ShellLinkFactory.Create(path);
 
                 Process.Start("explorer.exe", $"/select,\"{shellLink.TargetPath}\"");
+            }
+        }
+
+        public void handleOpenLinkLocation()
+        {
+            if (getSelectedItem() is var selectedItem)
+            {
+                string path = this.SelectedItems[0].SubItems[1].Text;
+                var shellLink = ShellLinkFactory.Create(path);
+
+                Process.Start("explorer.exe", $"/select,\"{shellLink.FullName}\"");
             }
         }
 
@@ -184,22 +184,6 @@ namespace ShortcutBay
         {
             ShellLinkListView control = this;
             return control.SelectedItems.Count > 0 ? control.SelectedItems[0] : null;
-        }
-
-        public void handleRename()
-        {
-            ListViewItem item = this.getSelectedItem();
-            if (item != null)
-            {
-                string ololo = item.SubItems[0].Text;
-                DialogResult res = InputBox.Show("Rename", "Input new name:", ref ololo);
-                if (res == DialogResult.OK)
-                {
-                    string from = item.SubItems[1].Text;
-                    string to = Path.GetDirectoryName(from) + Path.DirectorySeparatorChar + ololo + Path.GetExtension(from);
-                    Util.renameListItem(from, to);
-                }
-            }
         }
     }
 }

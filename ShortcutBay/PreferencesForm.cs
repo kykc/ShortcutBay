@@ -26,7 +26,7 @@ namespace ShortcutBay
         public PreferencesForm()
         {
             InitializeComponent();
-            Util.properShow(Util.getMainForm());
+            Util.properShow(Program.MainForm);
         }
 
         private void preferencesOk_Click(object sender, EventArgs e)
@@ -37,14 +37,14 @@ namespace ShortcutBay
 
         private void PreferencesForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Util.getMainForm().unlockForm();
+            Program.MainForm.unlockForm();
         }
 
         private void clearCacheButton_Click(object sender, EventArgs e)
         {
             this.PreferencesChanged = true;
-            ShellLinkCache.clearCache();
-            Util.getMainForm().initForm();
+            ShellLinkFactory.ClearFileCache();
+            Program.MainForm.initForm();
         }
 
         private void preferencesApply_Click(object sender, EventArgs e)
@@ -59,20 +59,20 @@ namespace ShortcutBay
 
         private void refreshListButton_Click(object sender, EventArgs e)
         {
-            Util.getMainForm().initForm();
+            Program.MainForm.initForm();
             this.PreferencesChanged = true;
         }
 
         private void resetPositionButton_Click(object sender, EventArgs e)
         {
             // Works only if form is shown..
-            Util.getMainForm().Location = new Point(0, 0);
+            Program.MainForm.Location = new Point(0, 0);
             this.PreferencesChanged = true;
         }
 
         private void PreferencesForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Util.getMainForm().preferencesForm = null;
+            Program.MainForm.preferencesForm = null;
         }
 
         private void PreferencesForm_Load(object sender, EventArgs e)
@@ -109,7 +109,7 @@ namespace ShortcutBay
                 Program.Settings.ShortcutKey = nameof(Shortcut.CtrlQ);
             }
 
-            Util.getMainForm()!.initForm();
+            Program.MainForm!.initForm();
             this.PreferencesChanged = false;
             Program.Settings.Save();
         }

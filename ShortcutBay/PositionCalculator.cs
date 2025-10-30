@@ -13,35 +13,34 @@ namespace ShortcutBay
         protected const char SEPARATOR = ' ';
         protected const char SEPARATOR_REPLACEMENT = '_';
 
-        protected static string getScreenIdentifier()
+        protected static string? GetScreenIdentifier()
         {
-            return Screen.PrimaryScreen.Bounds.Size.ToString().Replace(PositionCalculator.SEPARATOR, PositionCalculator.SEPARATOR_REPLACEMENT);
+            if (Screen.PrimaryScreen != null)
+            {
+                return Screen.PrimaryScreen.Bounds.Size.ToString().Replace(PositionCalculator.SEPARATOR,
+                    PositionCalculator.SEPARATOR_REPLACEMENT);
+            }
+
+            return null;
         }
 
-        protected static string[] parseItem(string item)
+        public static void StorePosition(int x, int y)
         {
-            return item.Split(PositionCalculator.SEPARATOR.ToString().ToCharArray());
+            string? desktopSize = PositionCalculator.GetScreenIdentifier();
+
+            if (desktopSize != null)
+            {
+                Program.Settings.MainFormPositions[desktopSize] = new Point(x, y);
+            }
         }
 
-        protected static string genItem(string key, int x, int y)
+        public static Point GetPosition(Form form)
         {
-            return key + PositionCalculator.SEPARATOR + x.ToString() + PositionCalculator.SEPARATOR + y.ToString();
-        }
+            string? desktopSize = PositionCalculator.GetScreenIdentifier();
 
-        public static void storePosition(int x, int y)
-        {
-            string desktopSize = PositionCalculator.getScreenIdentifier();
-
-            Program.Settings.MainFormPositions[desktopSize] = new Point(x, y);
-        }
-
-        public static Point getPosition(Form form)
-        {
-            string desktopSize = PositionCalculator.getScreenIdentifier();
-
-            return Program.Settings.MainFormPositions.TryGetValue(desktopSize, out var position)
+            return Program.Settings.MainFormPositions.TryGetValue(desktopSize ?? "", out var position)
                 ? position
-                : DefaultPositionCalculator.getDefaultLocation(form);
+                : DefaultPositionCalculator.CalcDefaultPosition(form);
         }
     }
 }

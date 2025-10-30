@@ -5,40 +5,30 @@ using System.Windows.Forms;
 
 namespace ShortcutBay
 {
-    public class ListViewItemMenu : ContextMenuStrip
+    public sealed class ListViewItemMenu : ContextMenuStrip
     {
         public ListViewItemMenu()
         {
-            this.init();
+            Items.Add(Util.createToolStripMenuItem("Run", HandleRun));
+            Items.Add(Util.createToolStripMenuItem("Run as Admin", HandleRunAsAdmin));
+            Items.Add(Util.createToolStripMenuItem("Open File Location", HandleOpenFileLocation));
+            Items.Add(Util.createToolStripMenuItem("Open Link Location", HandleOpenLinkLocation));
+            Items.Add(Util.createToolStripMenuItem("&Add Item", HandleAdd));
+            Items.Add(Util.createToolStripMenuItem("&Delete Item", HandleDelete));
+            Items.Add(Util.createToolStripMenuItem("Refresh &List", HandleRefresh));
         }
 
-        protected void init()
+        public void HandleRefresh(object? sender, EventArgs e)
         {
-            this.Items.Add(Util.createToolStripMenuItem("Run", new EventHandler(handleRun)));
-            this.Items.Add(Util.createToolStripMenuItem("Run as Admin", new EventHandler(handleRunAsAdmin)));
-            this.Items.Add(Util.createToolStripMenuItem("Open File Location", new EventHandler(handleOpenFileLocation)));
-            this.Items.Add(Util.createToolStripMenuItem("&Add Item", new EventHandler(handleAdd)));
-            this.Items.Add(Util.createToolStripMenuItem("&Delete Item", new EventHandler(handleDelete)));
-            this.Items.Add(Util.createToolStripMenuItem("&Rename", new EventHandler(handleRename)));
-            this.Items.Add(Util.createToolStripMenuItem("Refresh &List", new EventHandler(handleRefresh)));
+            Program.MainForm.initForm();
         }
 
-        public void handleRefresh(object sender, EventArgs e)
+        public void HandleDelete(object? sender, EventArgs e)
         {
-            Util.getMainForm().initForm();
+            Program.MainForm.getListView().handleDelete();
         }
 
-        public void handleRename(object sender, EventArgs e)
-        {
-            Util.getMainForm().getListView().handleRename();
-        }
-
-        public void handleDelete(object sender, EventArgs e)
-        {
-            Util.getMainForm().getListView().handleDelete();
-        }
-
-        public void handleAdd(object sender, EventArgs e)
+        public void HandleAdd(object? sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "All files (*.*)|*.*";
@@ -47,23 +37,28 @@ namespace ShortcutBay
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 Util.addListItem(dialog.FileName);
-                Util.getMainForm().initForm();
+                Program.MainForm.initForm();
             }
         }
 
-        public void handleRunAsAdmin(object? sender, EventArgs e)
+        public void HandleRunAsAdmin(object? sender, EventArgs e)
         {
-            Util.getMainForm().getListView().handleExecute(true);
+            Program.MainForm.getListView().handleExecute(true);
         }
 
-        public void handleRun(object? sender, EventArgs e)
+        public void HandleRun(object? sender, EventArgs e)
         {
-            Util.getMainForm().getListView().handleExecute();
+            Program.MainForm.getListView().handleExecute();
         }
 
-        public void handleOpenFileLocation(object? sender, EventArgs e)
+        public void HandleOpenFileLocation(object? sender, EventArgs e)
         {
-            Util.getMainForm().getListView().handleOpenFileLocation();
+            Program.MainForm.getListView().handleOpenFileLocation();
+        }
+
+        public void HandleOpenLinkLocation(object? sender, EventArgs e)
+        {
+            Program.MainForm.getListView().handleOpenLinkLocation();
         }
     }
 }

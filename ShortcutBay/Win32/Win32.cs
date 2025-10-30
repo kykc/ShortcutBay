@@ -7,7 +7,13 @@ namespace ShortcutBay.Win32
     public static class UxTheme
     {
         [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
-        public extern static int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
+        public extern static int SetWindowTheme(IntPtr hWnd, string? pszSubAppName, string pszSubIdList);
+    }
+
+    public static class Shell32
+    {
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr ExtractIcon(IntPtr hInst, string lpszExeFileName, int nIconIndex);
     }
 
     public static class User32
@@ -17,8 +23,37 @@ namespace ShortcutBay.Win32
         public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vlc);
         [DllImport("user32.dll")]
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-        [DllImport("user32")]
+        [DllImport("user32.dll")]
         public static extern IntPtr GetWindowDC(IntPtr hwnd);
+        [DllImport("user32.dll")]
+        public static extern bool DestroyIcon(IntPtr hIcon);
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        public static extern int GetSystemMetrics(int smIndex);
+
+        public const int SM_CXSCREEN = 0;
+        public const int SM_CYSCREEN = 1;
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowRect(IntPtr hWnd, out W32RECT lpRect);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindow(string lpClassName, string? lpWindowName);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern void GetClassName(System.IntPtr hWnd, System.Text.StringBuilder lpClassName, int nMaxCount);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct W32RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
     }
 
     public static class Kernel32
@@ -249,20 +284,20 @@ namespace ShortcutBay.Win32
 
     public class NativeWindowWithEvent : System.Windows.Forms.NativeWindow
     {
-        public event MessageEventHandler ProcessMessage;
+        public event MessageEventHandler? ProcessMessage;
         protected override void WndProc(ref Message m)
         {
             if (ProcessMessage != null)
             {
-                bool Handled = false;
-                ProcessMessage(this, ref m, ref Handled);
-                if (!Handled) base.WndProc(ref m);
+                bool handled = false;
+                ProcessMessage(this, ref m, ref handled);
+                if (!handled) base.WndProc(ref m);
             }
             else base.WndProc(ref m);
         }
     }
 
-    public class DummyWindowWithEvent : NativeWindowWithEvent, IDisposable
+    public sealed class DummyWindowWithEvent : NativeWindowWithEvent, IDisposable
     {
         public DummyWindowWithEvent()
         {

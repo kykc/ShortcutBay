@@ -21,48 +21,53 @@ namespace ShortcutBay
             this.Items.Add(Util.createToolStripMenuItem("&Exit", new EventHandler(handleExit)));
         }
 
-        public void handlePreferences(object sender, EventArgs e)
+        public void handlePreferences(object? sender, EventArgs e)
         {
-            if (Util.getMainForm().preferencesForm == null)
+            var preferencesForm = Program.MainForm.preferencesForm;
+
+            if (preferencesForm == null)
             {
-                Util.getMainForm().lockForm();
-                Util.getMainForm().preferencesForm = new PreferencesForm();
-                Util.getMainForm().preferencesForm.ShowDialog();
+                Program.MainForm.lockForm();
+                Program.MainForm.preferencesForm = preferencesForm = new PreferencesForm();
+                preferencesForm.ShowDialog();
             }
             else
             {
-                Util.getMainForm().preferencesForm.BringToFront();
+                preferencesForm.BringToFront();
             }
         }
 
-        public void handleHelp(object sender, EventArgs e)
+        public void handleHelp(object? sender, EventArgs e)
         {
-            if (Util.getMainForm().helpForm == null)
+            var helpForm = Program.MainForm.helpForm;
+
+            if (helpForm == null)
             {
-                Util.getMainForm().lockForm();
-                Util.getMainForm().helpForm = new HelpForm();
-                Util.getMainForm().helpForm.ShowDialog();
+                Program.MainForm.lockForm();
+                Program.MainForm.helpForm = helpForm = new HelpForm();
+                helpForm.ShowDialog();
             }
             else
             {
-                Util.getMainForm().helpForm.BringToFront();
+                helpForm.BringToFront();
             }
         }
 
-        public void handleExit(object sender, EventArgs e)
+        public void handleExit(object? sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        public void handleRefresh(object sender, EventArgs e)
+        public void handleRefresh(object? sender, EventArgs e)
         {
-            Util.getMainForm()!.initForm();
+            Program.MainForm.initForm();
         }
 
-        public void handleClearCache(object sender, EventArgs e)
+        public void handleClearCache(object? sender, EventArgs e)
         {
-            ShellLinkCache.clearCache();
-            Util.getMainForm()!.initForm();
+
+            ShellLinkFactory.ClearFileCache();
+            Program.MainForm.initForm();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -51,14 +52,14 @@ namespace ShortcutBay
             {
                 string msg = $"{e.GetType().ToString()} with message {e.Message} when deserializing config";
 
-                Util.writeDebugInfo($"ERROR: {msg}");
+                Debug.WriteLine($"ERROR: {msg}");
                 MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return null;
         }
 
-        private static string DetermineStateLocation()
+        public static string DetermineStateLocation()
         {
             var chocoLocation = Environment.GetEnvironmentVariable("ChocolateyInstall");
             var selfLocation = Path.GetDirectoryName(System.Environment.ProcessPath);

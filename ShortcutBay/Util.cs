@@ -16,7 +16,9 @@ namespace ShortcutBay
     {
         public static string md5(string Value)
         {
-            System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
+#pragma warning disable SYSLIB0021
+            var x = new System.Security.Cryptography.MD5CryptoServiceProvider();
+#pragma warning restore SYSLIB0021
             byte[] data = System.Text.Encoding.ASCII.GetBytes(Value);
             data = x.ComputeHash(data);
             string ret = "";
@@ -35,27 +37,17 @@ namespace ShortcutBay
         public static string encodeIcon(Image icon)
         {
             using MemoryStream ms = new MemoryStream();
-            //BinaryFormatter bf = new BinaryFormatter();
-            //bf.Serialize(ms, icon);
+
             icon.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
             return System.Convert.ToBase64String(ms.ToArray());
-            /*
-             * using (MemoryStream ms = new MemoryStream())
-    {
-        // Save the image data into the stream in the specified format
-        imageIn.Save(ms, format);
-        
-        // Convert the stream content to a byte array
-        return ms.ToArray();
-    }*/
         }
 
         public static Image? decodeIcon(string iconString)
         {
-            byte[] cachedIconByteArr = System.Convert.FromBase64String(iconString);
-            //BinaryFormatter bf = new BinaryFormatter();
+            byte[] cachedIconByteArr = Convert.FromBase64String(iconString);
+
             MemoryStream ms = new MemoryStream(cachedIconByteArr);
-            //return bf.Deserialize(ms) as Image;
+
             return Image.FromStream(ms).Clone() as Image;
         }
 
@@ -65,7 +57,7 @@ namespace ShortcutBay
             {
                 if (form.WasShown)
                 {
-                    PositionCalculator.storePosition(form.Location.X, form.Location.Y);
+                    PositionCalculator.StorePosition(form.Location.X, form.Location.Y);
                 }
                 Util.properHide(form);
             }
@@ -83,7 +75,7 @@ namespace ShortcutBay
             form.Activate();
             form.BringToFront();
             form.Visible = true;
-            form.Location = PositionCalculator.getPosition(form);
+            form.Location = PositionCalculator.GetPosition(form);
             form.Opacity = 0.99;
         }
 
@@ -97,7 +89,6 @@ namespace ShortcutBay
 
         public static bool execute(string path, bool asAdmin = false)
         {
-            //MessageBox.Show(path);
             Process myProcess = new Process();
             ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(path);
             myProcessStartInfo.UseShellExecute = true;
@@ -115,7 +106,6 @@ namespace ShortcutBay
             }
             catch (Exception e)
             {
-                //MessageBox.Show(e.GetType().ToString());
                 MessageBox.Show(e.Message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
@@ -130,11 +120,11 @@ namespace ShortcutBay
             }
             catch (Exception e)
             {
-                Util.writeDebugInfo(e.Message);
+                Debug.WriteLine(e.Message);
                 MessageBox.Show(e.Message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            Util.getMainForm()!.initForm();
+            Program.MainForm.initForm();
         }
 
         public static void renameListItem(string from, string to)
@@ -147,15 +137,16 @@ namespace ShortcutBay
             }
             catch (Exception e)
             {
-                Util.writeDebugInfo(e.Message);
+                Debug.WriteLine(e.Message);
                 MessageBox.Show(e.Message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            Util.getMainForm()!.initForm();
+
+            Program.MainForm.initForm();
         }
 
         public static bool isInFullScreenMode()
         {
-            return DetectFullScreen.IsForegroundWwindowFullScreen();
+            return DetectFullScreen.CheckForegroundWindowIsFullscreen();
         }
 
         public static void addListItem(string file)
@@ -177,21 +168,11 @@ namespace ShortcutBay
                     Path.GetFileNameWithoutExtension(file) +
                     ".lnk";
 
-                ShellLink link = new ShellLink(path);
+                var link = ShellLinkFactory.Create(path);
                 link.TargetPath = file;
                 link.Save();
             }
 
-        }
-
-        public static MainForm getMainForm()
-        {
-            return Program.MainForm;
-        }
-
-        public static void writeDebugInfo(string str)
-        {
-            //MessageBox.Show(str);
         }
 
         public static bool isShellLink(string path)
@@ -199,11 +180,11 @@ namespace ShortcutBay
 
             try
             {
-                ShellLink link = new ShellLink(path);
+                var link = ShellLinkFactory.Create(path);
             }
             catch (Exception e)
             {
-                Util.writeDebugInfo(e.Message);
+                Debug.WriteLine(e.Message);
                 return false;
             }
 

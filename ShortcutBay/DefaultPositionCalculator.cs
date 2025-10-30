@@ -6,9 +6,9 @@ using System.Drawing;
 
 namespace ShortcutBay
 {
-    class DefaultPositionCalculator
+    static class DefaultPositionCalculator
     {
-        public static Point getDefaultLocation(Form form)
+        public static Point CalcDefaultPosition(Form form)
         {
             Point retVal = new Point(0, 0);
             Rectangle? desktopSize = Screen.PrimaryScreen?.WorkingArea;

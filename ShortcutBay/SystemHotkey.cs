@@ -8,57 +8,45 @@ namespace ShortcutBay
 {
     public class SystemHotkey : System.ComponentModel.Component, IDisposable
     {
-        private System.ComponentModel.Container components = null;
-        protected Win32.DummyWindowWithEvent m_Window = new Win32.DummyWindowWithEvent();
-        protected Shortcut m_HotKey = Shortcut.None;
-        protected bool isRegistered = false;
-        public event System.EventHandler Pressed;
-        public event System.EventHandler Error;
+        private IContainer _components;
+        private Win32.DummyWindowWithEvent _window = new();
+        private Shortcut _hotkey = Shortcut.None;
+        private bool IsRegistered { get; set; } = false;
+        private event EventHandler Pressed;
 
-        public SystemHotkey(System.ComponentModel.IContainer container)
+        public SystemHotkey(IContainer container, EventHandler pressedHandler, Shortcut shortcut)
         {
             container.Add(this);
-            InitializeComponent();
-            m_Window.ProcessMessage += new Win32.MessageEventHandler(MessageEvent);
-        }
-
-        public SystemHotkey()
-        {
-            InitializeComponent();
-            if (!DesignMode)
-            {
-                m_Window.ProcessMessage += new Win32.MessageEventHandler(MessageEvent);
-            }
+            _components = container;
+            _window.ProcessMessage += MessageEvent;
+            Shortcut = shortcut;
+            Pressed += pressedHandler;
         }
 
         public new void Dispose()
         {
-            if (isRegistered)
+            if (IsRegistered)
             {
                 if (UnregisterHotkey())
-                    System.Diagnostics.Debug.WriteLine("Unreg: OK");
+                    Debug.WriteLine("Unreg: OK");
             }
-            System.Diagnostics.Debug.WriteLine("Disposed");
+
+            Debug.WriteLine("Disposed");
         }
 
-        private void InitializeComponent()
-        {
-            components = new System.ComponentModel.Container();
-        }
-
-        protected void MessageEvent(object sender, ref Message m, ref bool Handled)
+        protected void MessageEvent(object sender, ref Message m, ref bool handled)
         {
             if ((m.Msg == (int)Win32.Msgs.WM_HOTKEY) && (m.WParam == (IntPtr)this.GetType().GetHashCode()))
             {
-                Handled = true;
-                System.Diagnostics.Debug.WriteLine("HOTKEY pressed!");
+                handled = true;
+                Debug.WriteLine("HOTKEY pressed!");
                 if (Pressed != null) Pressed(this, EventArgs.Empty);
             }
         }
 
         protected bool UnregisterHotkey()
         {
-            return Win32.User32.UnregisterHotKey(m_Window.Handle, this.GetType().GetHashCode());
+            return Win32.User32.UnregisterHotKey(_window.Handle, this.GetType().GetHashCode());
         }
 
         protected bool RegisterHotkey(Shortcut key)
@@ -69,56 +57,48 @@ namespace ShortcutBay
             if (((int)key & (int)Keys.Shift) == (int)Keys.Shift) { mod += (int)Win32.Modifiers.MOD_SHIFT; k2 = Keys.Shift; }
             if (((int)key & (int)Keys.Control) == (int)Keys.Control) { mod += (int)Win32.Modifiers.MOD_CONTROL; k2 = Keys.Control; }
 
-            System.Diagnostics.Debug.Write(mod.ToString() + " ");
-            System.Diagnostics.Debug.WriteLine((((int)key) - ((int)k2)).ToString());
+            Debug.Write(mod.ToString() + " ");
+            Debug.WriteLine((((int)key) - ((int)k2)).ToString());
 
-            return Win32.User32.RegisterHotKey(m_Window.Handle, this.GetType().GetHashCode(), (int)mod, ((int)key) - ((int)k2));
+            return Win32.User32.RegisterHotKey(_window.Handle, this.GetType().GetHashCode(), (int)mod, ((int)key) - ((int)k2));
         }
-
-        public bool IsRegistered
-        {
-            get { return isRegistered; }
-        }
-
 
         [DefaultValue(Shortcut.None)]
         public Shortcut Shortcut
         {
-            get { return m_HotKey; }
+            get { return _hotkey; }
             set
             {
                 if (DesignMode)
                 {
-                    m_HotKey = value; return;
+                    _hotkey = value; return;
                 }
-                if ((isRegistered) && (m_HotKey != value))
+                if ((IsRegistered) && (_hotkey != value))
                 {
                     if (UnregisterHotkey())
                     {
-                        System.Diagnostics.Debug.WriteLine("Unreg: OK");
-                        isRegistered = false;
+                        Debug.WriteLine("Unreg: OK");
+                        IsRegistered = false;
                     }
                     else
                     {
-                        if (Error != null) Error(this, EventArgs.Empty);
-                        System.Diagnostics.Debug.WriteLine("Unreg: ERR");
+                        Debug.WriteLine("Unreg: ERR");
                     }
                 }
                 if (value == Shortcut.None)
                 {
-                    m_HotKey = value; return;
+                    _hotkey = value; return;
                 }
                 if (RegisterHotkey(value))
                 {
-                    System.Diagnostics.Debug.WriteLine("Reg: OK");
-                    isRegistered = true;
+                    Debug.WriteLine("Reg: OK");
+                    IsRegistered = true;
                 }
                 else
                 {
-                    if (Error != null) Error(this, EventArgs.Empty);
-                    System.Diagnostics.Debug.WriteLine("Reg: ERR");
+                    Debug.WriteLine("Reg: ERR");
                 }
-                m_HotKey = value;
+                _hotkey = value;
             }
         }
     }
